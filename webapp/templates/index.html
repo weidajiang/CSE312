@@ -1,13 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="index.css">
-</head>
-<body>
+<html>
+    <head>
+        <title>CSE312 Sample Front End</title>
+    </head>
+    <body>
+            <form method="post" enctype="multipart/form-data">
 
-<h1>{{ contents }}</h1>
+                <label for="form-oldName"> Username: </label>
+                <input id="form-oldName" type="text" name="username">
 
-</body>
+                <label for="form-oldComment"> Password: </label>
+                <input id="form-oldComment" type="text" name="password">
+
+                <input type="submit" value="Login">
+            </form>
+            <p>{{failed}}</p>
+    </body>
 </html>
