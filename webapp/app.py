@@ -1,10 +1,19 @@
 import flask
 import bcrypt
-import hashlib
+import os
 
 app = flask.Flask(__name__)
+from flask_sock import Sock
 
-@app.route('/', methods=["GET","POST"])
+sock = Sock(app)
+
+@app.route('/favicon.ico')
+def favicon():
+    return flask.send_from_directory(os.path.join(app.root_path, 'static'),
+                          'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
+
+@app.route('/', methods=["GET", "POST"])
 def login():
     app.secret_key = bcrypt.gensalt()  # 设置随机生成salt
     if flask.request.method == 'GET':
@@ -28,7 +37,20 @@ def userPage():
     return flask.render_template("UserPage.html", username=username)
 
 
+@app.route('/chat')
+def chat():
+    return flask.render_template('chat.html')
 
+@app.route("/function.js")
+def static_dir(path):
+    return flask.send_from_directory("static", path)
+
+
+@sock.route('/websocket')
+def echo(sock):
+    while True:
+        data = sock.receive()
+        sock.send(data)
 
 
 
