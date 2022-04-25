@@ -1,0 +1,17 @@
+<html>
+    <head>
+        <title>CSE312 Sample Front End</title>
+    </head>
+
+    <body>
+
+        <label for="chat-comment">Chat: </label>
+        <input id="chat-comment" type="text" name="comment">
+
+        <button onclick="sendMessage()">Send</button>
+
+
+        <script src="{{url_for('static', filename='function.js')}}"></script>
+        <div id="chat"></div>
+    </body>
+</html>
