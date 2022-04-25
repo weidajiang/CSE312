@@ -7,6 +7,8 @@ from flask_sock import Sock
 
 sock = Sock(app)
 
+
+#设置网页图标
 @app.route('/favicon.ico')
 def favicon():
     return flask.send_from_directory(os.path.join(app.root_path, 'static'),
@@ -30,25 +32,26 @@ def login():
     if True:
         return flask.render_template("index.html", failed="wrong password or username")
 
-
+#登入成功页面
 @app.route('/user')
 def userPage():
     username = flask.session["user_info"]
     return flask.render_template("UserPage.html", username=username)
 
-
+#聊天室页面
 @app.route('/chat')
 def chat():
     return flask.render_template('chat.html')
+
 
 @app.route("/function.js")
 def static_dir(path):
     return flask.send_from_directory("static", path)
 
-
+#暂时模拟websocket, 响应牵手
 @sock.route('/websocket')
 def echo(sock):
-    while True:
+    while True:  
         data = sock.receive()
         sock.send(data)
 
