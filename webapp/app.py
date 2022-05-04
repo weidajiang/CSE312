@@ -3,6 +3,7 @@ import os
 import MongoDB
 import hashlib
 import random
+import json
 from flask_sock import Sock
 from flask import make_response, render_template, request, send_from_directory, Flask, redirect, Response
 
@@ -10,7 +11,7 @@ from flask import make_response, render_template, request, send_from_directory, 
 
 app = Flask(__name__)
 sock = Sock(app)
-clients = []
+clients = {}
 
 
 #设置网页图标
@@ -52,7 +53,7 @@ def login():
         hashed_password = hashlib.sha224(password.encode() + salt).hexdigest()
         if hashed_password == stored_password:   #判断密码是否配对
             db.add_AuthenticationToken(username, AuthenticationToken)   #将cookie数据
-            response = redirect("http://127.0.0.1:5000/user")   #放回路径
+            response = redirect("http://127.0.0.1:5000/chat")   #放回路径
             response.set_cookie("userToken", AuthenticationToken, max_age=3600)   #设置cookie
             return response
         else:
@@ -62,6 +63,7 @@ def login():
 #登入成功页面
 @app.route('/user')
 def userPage():
+
     db = MongoDB.mongoDB()
     cookie = request.cookies.get("userToken")
     username = db.findUsernameByCookie(cookie)['username']
@@ -79,7 +81,13 @@ def kiwi():
 #聊天室页面
 @app.route('/chat')
 def chat():
-    return render_template('chat.html')
+    render_text = []
+    for c in clients:
+        render_text.append(clients[c])
+    db = MongoDB.mongoDB()
+    cookie = request.cookies.get("userToken")
+    username = db.findUsernameByCookie(cookie)['username']
+    return render_template("chat.html", username=username, onlines=render_text)
 
 
 @app.route("/function.js")
@@ -90,10 +98,16 @@ def static_dir(path):
 #暂时模拟websocket, 响应牵手
 @sock.route('/websocket')
 def websocket(socket):
-    clients.append(socket)
+    db = MongoDB.mongoDB()
+    cookie = request.cookies.get("userToken")
+    username = db.findUsernameByCookie(cookie)['username']
+    clients[socket] = db.findUsernameByCookie(cookie)['username']
     while True:
         data = socket.receive()
         data = data.replace("\r\n", "").replace("&", "&amp").replace(">", "&gt").replace("<", "&lt")
+        data = json.loads(data)
+        data['username'] = username
+        data = json.dumps(data)
         if data.__contains__("webRTC"):
             for c in clients:
                 if c != socket:
@@ -102,7 +116,7 @@ def websocket(socket):
             for c in clients:
                 c.send(data)
 
-#生成随机cookie
+
 def generate_token():
     token = ""
     for i in range(20):
