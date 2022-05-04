@@ -4,26 +4,29 @@
     </head>
 
     <body>
+        <h4> Welcome back {{username}}!</h4>
         <label for="chat-comment">Chat: </label>
         <input id="chat-comment" type="text" name="comment">
 
-        <button onclick="sendMessage()">Send</button>
+        <button onclick="sendMessage()">Send</button>       To: <input id="send-to" type="text" value="All users">
 
 
         <script src="{{url_for('static', filename='function.js')}}"></script>
         <div id="chat"></div>
-            <br/>
-            <button onclick="startVideo()">Start My Video</button>
-            <br/>
-            <button onclick="connectWebRTC()">Start Video Chat</button>
-            <br/>
-    
-    
-            <video id="myVideo" autoplay muted></video>
-            <br/>
-            <video id="otherVideo" autoplay></video>
-    
-            <div id="paragraph">
-        </div>
+        <br/>
+        <button onclick="startVideo()">Start My Video</button>
+        <br/>
+        <button onclick="connectWebRTC()">Start Video Chat</button>
+        <br/>
+        <video id="myVideo" autoplay muted></video>
+        <br/>
+        <video id="otherVideo" autoplay></video>
+        <h4>Online Users: </h4>
+        <ul>
+            {% for client in onlines %}
+                <li>{{ client }}</li>
+            {% endfor %}
+        </ul>
+        <div id="paragraph"></div>
     </body>
 </html>
