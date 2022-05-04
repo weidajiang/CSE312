@@ -3,7 +3,7 @@ import pymongo
 class mongoDB:
 
     def __init__(self):
-        # mongodb://localhost:27017/
+        #mongodb://localhost:27017/
         client = pymongo.MongoClient("mongodb://localhost:27017/")
         db = client.Users
         InfoProject = db.InfoProject
