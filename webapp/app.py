@@ -102,7 +102,7 @@ def websocket(socket):
             for c in clients:
                 c.send(data)
 
-
+#生成随机cookie
 def generate_token():
     token = ""
     for i in range(20):
