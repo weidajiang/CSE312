@@ -23,7 +23,7 @@ function sendMessage() {
             socket.send(JSON.stringify({'messageType': 'chatMessage', 'comment': comment, 'target': target}));
         }
         catch(e){
-			alert("程序报错");
+			alert("Error");
 		}
     }
 }
