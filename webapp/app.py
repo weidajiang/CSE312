@@ -58,6 +58,9 @@ def login():
         username = request.form.get("username")  # 获取登录表单里的username
         password = request.form.get("password")  # 获取登录表单里的password
         user_info = db.findInfo(username)        # 数据库查找username信息
+        #如果找不到username直接放回
+        if user_info is None:
+            return render_template("index.html", failed="wrong password or username")
         salt, stored_password = user_info["salt"], user_info["password"]  #存于数据的秘密和盐
         hashed_password = hashlib.sha224(password.encode() + salt).hexdigest()
         if hashed_password == stored_password:   #判断密码是否配对
@@ -104,13 +107,22 @@ def kiwi():
 @app.route('/profile/<regex("[a-z]*"):username>')
 def profilePage(username):
     db = MongoDB.mongoDB()
+    cookie = request.cookies.get("userToken")   #拿到cookie
+    stored_username = db.findUsernameByCookie(cookie)['username']  #通过cookie拿到username
+    db = MongoDB.mongoDB()
     # 拿到当前username的profile
     info = db.findProfile(username)
-    return render_template("userProfile.html", username=f"Username:   {username}", sex=f"Sex:   {info['sex']}",
-                           birth=f"Birthday:   {info['year']}", address=f"Address:   {info['address']}", bio=f"Bio:   {info['bio']}")
+    # 如果是本人提供修改profile选项
+    if username == stored_username:
+        return render_template("userProfile.html", username=f"Username:   {username}", sex=f"Sex:   {info['sex']}",
+                               birth=f"Birthday:   {info['year']}", address=f"Address:   {info['address']}", bio=f"Bio:   {info['bio']}")
+    # 不是本人只能游览
+    else:
+        return render_template("userProfile.html", username=f"Username:   {username}", sex=f"Sex:   {info['sex']}",
+                               birth=f"Birthday:   {info['year']}", address=f"Address:   {info['address']}", bio=f"Bio:   {info['bio']}", hidden="visibility: hidden")
 
 
-#聊天室页面
+# 聊天室页面
 @app.route('/chat')
 def chat():
     db = MongoDB.mongoDB()
