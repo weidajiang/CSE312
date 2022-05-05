@@ -49,7 +49,7 @@ def login():
         password = request.form.get("NewPassword")  #获取注册表单里的password
         hashed_password = hashlib.sha224(password.encode() + salt).hexdigest()  #哈希加盐
         db.addInfo(username, hashed_password, salt)  #存入数据库
-        db.addProfile(username, "N/A", "N/A", "N/A", "N/A", "N/A")
+        db.addProfile(username, "N/A", "N/A", "N/A", "N/A")
         return render_template("index.html", successfully="Your account has been created successfully!")
 
     else:
@@ -69,6 +69,7 @@ def login():
             return render_template("index.html", failed="wrong password or username")
 
 
+# 访问用户profile
 @app.route('/profile', methods=["GET", "POST"])
 def profile():
     db = MongoDB.mongoDB()
@@ -76,16 +77,15 @@ def profile():
         return render_template('Profile.html')
     cookie = request.cookies.get("userToken")
     username = db.findUsernameByCookie(cookie)['username']
+    # 拿到当前用户profile在进行redirect
     db.UpdateProfile(username, request.form.get("sex"), f"{request.form.get('month')}, {request.form.get('year')}", request.form.get("address"), request.form.get("bio"))
     response = redirect(f"http://127.0.0.1:5000/profile/{username}")
     return response
 
 
-
 #登入成功页面
 @app.route('/user')
 def userPage():
-
     db = MongoDB.mongoDB()
     cookie = request.cookies.get("userToken")
     username = db.findUsernameByCookie(cookie)['username']
@@ -100,9 +100,11 @@ def kiwi():
     return file
 
 
+#通过正则表达式来判断路径是否为 /profile/(username) 格式
 @app.route('/profile/<regex("[a-z]*"):username>')
 def profilePage(username):
     db = MongoDB.mongoDB()
+    # 拿到当前username的profile
     info = db.findProfile(username)
     return render_template("userProfile.html", username=f"Username:   {username}", sex=f"Sex:   {info['sex']}",
                            birth=f"Birthday:   {info['year']}", address=f"Address:   {info['address']}", bio=f"Bio:   {info['bio']}")
@@ -112,9 +114,10 @@ def profilePage(username):
 @app.route('/chat')
 def chat():
     db = MongoDB.mongoDB()
-    cookie = request.cookies.get("userToken")
-    username = db.findUsernameByCookie(cookie)['username']
+    cookie = request.cookies.get("userToken")   #拿到cookie
+    username = db.findUsernameByCookie(cookie)['username']  #通过cookie拿到username
     clients[username] = ""
+    # 显示当前聊天室里的人  这里有一个bug
     render_text = []
     for c in clients:
         if c not in render_text:
@@ -127,15 +130,16 @@ def static_dir(path):
     return send_from_directory("static", path)
 
 
-#暂时模拟websocket, 响应牵手, socketio用不明白只能用这个来代替了
+#暂时模拟websocket, 响应牵手, socketio用不明白只能用这个来代替了(我是傻逼)
 @sock.route('/websocket')
 def websocket(socket):
     db = MongoDB.mongoDB()
-    cookie = request.cookies.get("userToken")
-    username = db.findUsernameByCookie(cookie)['username']
-    clients[db.findUsernameByCookie(cookie)['username']] = socket
+    cookie = request.cookies.get("userToken")  #从header拿到cookie
+    username = db.findUsernameByCookie(cookie)['username']  #通过cookie拿到username
+    clients[db.findUsernameByCookie(cookie)['username']] = socket  #吧socket加入到字典去
     while True:
         data = socket.receive()
+        # html character escape
         data = data.replace("\r\n", "").replace("&", "&amp").replace(">", "&gt").replace("<", "&lt")
         data = json.loads(data)
         data['username'] = username
@@ -145,13 +149,18 @@ def websocket(socket):
                 if clients[c] != socket:
                     clients[c].send(data)
         else:
+            # 公屏聊天
             if target_user == 'All users':
                 data = json.dumps(data)
                 try:
                     for c in clients:
-                        clients[c].send(data)
+                        try:
+                            clients[c].send(data)
+                        except Exception as e:
+                            continue
                 except Exception as e:
                     continue
+            # 私聊
             else:
                 data['comment'] = data['comment'] + '(private)'
                 data = json.dumps(data)
