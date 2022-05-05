@@ -19,7 +19,12 @@ function sendMessage() {
     chatBox.value = "";
     chatBox.focus();
     if (comment !== "") {
-        socket.send(JSON.stringify({'messageType': 'chatMessage', 'comment': comment, 'target': target}));
+        try{
+            socket.send(JSON.stringify({'messageType': 'chatMessage', 'comment': comment, 'target': target}));
+        }
+        catch(e){
+			alert("程序报错");
+		}
     }
 }
 
