@@ -2,7 +2,6 @@
     <head>
         <title>CSE312 Sample Front End</title>
     </head>
-
     <body>
         <h4> Welcome back {{username}}!</h4>
         <label for="chat-comment">Chat: </label>
@@ -10,17 +9,18 @@
 
         <button onclick="sendMessage()">Send</button>       To: <input id="send-to" type="text" value="All users">
 
-
         <script src="{{url_for('static', filename='function.js')}}"></script>
         <div id="chat"></div>
-        <br/>
+        <br>
         <button onclick="startVideo()">Start My Video</button>
-        <br/>
+        <br>
         <button onclick="connectWebRTC()">Start Video Chat</button>
-        <br/>
+        <br>
         <video id="myVideo" autoplay muted></video>
-        <br/>
+        <br>
         <video id="otherVideo" autoplay></video>
+        <br>
+        <a href = {{profileLink}}> My Profile </a>
         <h4>Online Users: </h4>
         <ul>
             {% for client in onlines %}
@@ -28,5 +28,6 @@
             {% endfor %}
         </ul>
         <div id="paragraph"></div>
+
     </body>
 </html>
