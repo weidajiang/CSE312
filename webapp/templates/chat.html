@@ -24,7 +24,7 @@
         <h4>Online Users: </h4>
         <ul>
             {% for client in onlines %}
-                <li>{{ client }}</li>
+                <li><a href="http://127.0.0.1:5000/profile/{{client}}">{{client}}</a></li>
             {% endfor %}
         </ul>
         <div id="paragraph"></div>
