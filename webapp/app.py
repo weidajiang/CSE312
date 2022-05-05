@@ -5,27 +5,35 @@ import hashlib
 import random
 import json
 from flask_sock import Sock
-from flask import make_response, render_template, request, send_from_directory, Flask, redirect, Response
+from werkzeug.routing import BaseConverter
+from flask import render_template, request, send_from_directory, Flask, redirect
 
+
+#让route可以以正则表达式的形式
+class RegexConverter(BaseConverter):
+    def __init__(self, url_map, *items):
+        super(RegexConverter, self).__init__(url_map)
+        self.regex = items[0]
 
 
 app = Flask(__name__)
 sock = Sock(app)
+app.url_map.converters['regex'] = RegexConverter
 clients = {}
 
 
 #设置网页图标
+
+
 @app.route('/favicon.ico')
 def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'static'),
-                          'favicon.ico', mimetype='image/vnd.microsoft.icon')
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 
 #设置css
 @app.route('/style.css')
 def css_file():
-    return send_from_directory(os.path.join(app.root_path, 'static'),
-                          'stye.css')
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'style.css')
 
 
 @app.route('/', methods=["GET", "POST"])
@@ -41,6 +49,7 @@ def login():
         password = request.form.get("NewPassword")  #获取注册表单里的password
         hashed_password = hashlib.sha224(password.encode() + salt).hexdigest()  #哈希加盐
         db.addInfo(username, hashed_password, salt)  #存入数据库
+        db.addProfile(username, "N/A", "N/A", "N/A", "N/A", "N/A")
         return render_template("index.html", successfully="Your account has been created successfully!")
 
     else:
@@ -58,6 +67,19 @@ def login():
             return response
         else:
             return render_template("index.html", failed="wrong password or username")
+
+
+@app.route('/profile', methods=["GET", "POST"])
+def profile():
+    db = MongoDB.mongoDB()
+    if request.method == 'GET':
+        return render_template('Profile.html')
+    cookie = request.cookies.get("userToken")
+    username = db.findUsernameByCookie(cookie)['username']
+    db.UpdateProfile(username, request.form.get("sex"), f"{request.form.get('month')}, {request.form.get('year')}", request.form.get("address"), request.form.get("bio"))
+    response = redirect(f"http://127.0.0.1:5000/profile/{username}")
+    return response
+
 
 
 #登入成功页面
@@ -78,16 +100,26 @@ def kiwi():
     return file
 
 
+@app.route('/profile/<regex("[a-z]*"):username>')
+def profilePage(username):
+    db = MongoDB.mongoDB()
+    info = db.findProfile(username)
+    return render_template("userProfile.html", username=f"Username:   {username}", sex=f"Sex:   {info['sex']}",
+                           birth=f"Birthday:   {info['year']}", address=f"Address:   {info['address']}", bio=f"Bio:   {info['bio']}")
+
+
 #聊天室页面
 @app.route('/chat')
 def chat():
-    render_text = []
-    for c in clients:
-        render_text.append(clients[c])
     db = MongoDB.mongoDB()
     cookie = request.cookies.get("userToken")
     username = db.findUsernameByCookie(cookie)['username']
-    return render_template("chat.html", username=username, onlines=render_text)
+    clients[username] = ""
+    render_text = []
+    for c in clients:
+        if c not in render_text:
+            render_text.append(c)
+    return render_template("chat.html", username=username, onlines=render_text, profileLink=f'http://127.0.0.1:5000/profile/{username}')
 
 
 @app.route("/function.js")
@@ -95,26 +127,39 @@ def static_dir(path):
     return send_from_directory("static", path)
 
 
-#暂时模拟websocket, 响应牵手
+#暂时模拟websocket, 响应牵手, socketio用不明白只能用这个来代替了
 @sock.route('/websocket')
 def websocket(socket):
     db = MongoDB.mongoDB()
     cookie = request.cookies.get("userToken")
     username = db.findUsernameByCookie(cookie)['username']
-    clients[socket] = db.findUsernameByCookie(cookie)['username']
+    clients[db.findUsernameByCookie(cookie)['username']] = socket
     while True:
         data = socket.receive()
         data = data.replace("\r\n", "").replace("&", "&amp").replace(">", "&gt").replace("<", "&lt")
         data = json.loads(data)
         data['username'] = username
-        data = json.dumps(data)
+        target_user = data['target']
         if data.__contains__("webRTC"):
             for c in clients:
-                if c != socket:
-                    c.send(data)
+                if clients[c] != socket:
+                    clients[c].send(data)
         else:
-            for c in clients:
-                c.send(data)
+            if target_user == 'All users':
+                data = json.dumps(data)
+                try:
+                    for c in clients:
+                        clients[c].send(data)
+                except Exception as e:
+                    continue
+            else:
+                data['comment'] = data['comment'] + '(private)'
+                data = json.dumps(data)
+                if clients[target_user] != socket:
+                    clients[target_user].send(data)
+                    socket.send(data)
+                else:
+                    socket.send(data)
 
 
 def generate_token():
