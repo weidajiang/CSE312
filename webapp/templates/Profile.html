@@ -1,0 +1,71 @@
+<html>
+    <head>
+        <title>User Profile</title>
+        <link rel="shortcut icon" href="{{url_for('static',filename='img/favicon.ico')}}" type="image/x-icon"/>
+    </head>
+    <body>
+        <form method="post" enctype="multipart/form-data">
+            <table width="400">
+                <tr>
+                    <td>
+                        Sex:
+                    </td>
+                    <td>
+                        <input type="radio" name="sex", value="maile">Male
+                        <input type="radio" name="sex", value="female">Female
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Birth Day:
+                    </td>
+                    <td>
+                         <select name="year">
+                             <option> Year </option>
+                             <option> 2004 </option>
+                             <option> 2003 </option>
+                             <option> 2002 </option>
+                             <option> 2001 </option>
+                             <option> 1999 </option>
+                             <option> 1998 </option>
+                             <option> 1997 </option>
+                             <option> 1996 </option>
+                         </select>
+                        <select name="month">
+                             <option> Month </option>
+                             <option> Jan </option>
+                             <option> Feb </option>
+                             <option> Mar </option>
+                             <option> Apr </option>
+                             <option> May </option>
+                             <option> Jun </option>
+                             <option> Jul </option>
+                             <option> Aug </option>
+                             <option> Sep </option>
+                             <option> Oct </option>
+                             <option> Nov </option>
+                             <option> Dec </option>
+                         </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Address:
+                    </td>
+                    <td>
+                        <input type="text" name="address">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Bio:
+                    </td>
+                    <td>
+                        <input type="text" name="bio">
+                    </td>
+                </tr>
+            </table>
+            <input type="submit" value="Update">
+        </form>
+    </body>
+</html>
