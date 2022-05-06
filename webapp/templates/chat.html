@@ -1,6 +1,7 @@
 <html>
     <head>
         <title>CSE312 Sample Front End</title>
+        <meta charset="UTF-8">
     </head>
     <body>
         <h4> Welcome back {{username}}!</h4>
@@ -8,9 +9,26 @@
         <input id="chat-comment" type="text" name="comment">
 
         <button onclick="sendMessage()">Send</button>       To: <input id="send-to" type="text" value="All users">
+        <table border="1">
+            <tr>
+                <td onclick="Emoji('&#128513;')">&#128513;</td>
+                <td onclick="Emoji('&#129409;')">&#129409;</td>
+                <td onclick="Emoji('&#128514;')">&#128514;</td>
+                <td onclick="Emoji('&#128515;')">&#128515;</td>
+                <td onclick="Emoji('&#128516;')">&#128516;</td>
+            </tr>
+            <tr>
+                <td onclick="Emoji('&#128517;')">&#128517;</td>
+                <td onclick="Emoji('&#127569;')">&#127569;</td>
+                <td onclick="Emoji('&#129316;')">&#129316;</td>
+                <td onclick="Emoji('&#128557;')">&#128557;</td>
+                <td onclick="Emoji('&#128074;')">&#128074;</td>
+            </tr>
+        </table>
 
         <script src="{{url_for('static', filename='function.js')}}"></script>
         <div id="chat"></div>
+
         <br>
         <button onclick="startVideo()">Start My Video</button>
         <br>
