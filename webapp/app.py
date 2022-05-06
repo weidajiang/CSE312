@@ -23,8 +23,6 @@ clients = {}
 
 
 #设置网页图标
-
-
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
@@ -87,12 +85,11 @@ def profile():
 
 
 #登入成功页面
-@app.route('/user')
+@app.route('/user', methods=["GET", "POST"])
 def userPage():
-    db = MongoDB.mongoDB()
-    cookie = request.cookies.get("userToken")
-    username = db.findUsernameByCookie(cookie)['username']
-    return render_template("UserPage.html", username=username)
+    if request.method == 'GET':
+        return render_template("UserPage.html")
+    print(1)
 
 
 #访问meHotel
@@ -152,16 +149,20 @@ def websocket(socket):
     while True:
         data = socket.receive()
         # html character escape
-        data = data.replace("\r\n", "").replace("&", "&amp").replace(">", "&gt").replace("<", "&lt")
         data = json.loads(data)
         data['username'] = username
-        target_user = data['target']
-        if data.__contains__("webRTC"):
+        # 判断是否为Emoji类型
+        if data['Emoji'] == '0':
+            data['comment'] = data['comment'].replace("\r\n", "").replace("&", "&amp").replace(">", "&gt").replace("<", "&lt")
+            data['username'] = data['username'].replace("\r\n", "").replace("&", "&amp").replace(">", "&gt").replace("<", "&lt")
+        if data['messageType'].__contains__("webRTC"):
+            data = json.dumps(data)
             for c in clients:
                 if clients[c] != socket:
                     clients[c].send(data)
         else:
             # 公屏聊天
+            target_user = data['target']
             if target_user == 'All users':
                 data = json.dumps(data)
                 try:
