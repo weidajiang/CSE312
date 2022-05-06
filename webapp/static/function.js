@@ -11,7 +11,16 @@ document.addEventListener("keypress", function (event) {
 });
 
 // Read the comment the user is sending to chat and send it to the server over the WebSocket as a JSON string
+
+function Emoji(value) {
+    console.log(value);
+    const chatBox1 = document.getElementById("send-to");
+    const target = chatBox1.value;
+    socket.send(JSON.stringify({'messageType': 'chatMessage', 'comment': value, 'target': target, 'Emoji': '1'}));
+}
+
 function sendMessage() {
+
     const chatBox = document.getElementById("chat-comment");
     const chatBox1 = document.getElementById("send-to");
     const comment = chatBox.value;
@@ -20,10 +29,10 @@ function sendMessage() {
     chatBox.focus();
     if (comment !== "") {
         try{
-            socket.send(JSON.stringify({'messageType': 'chatMessage', 'comment': comment, 'target': target}));
+            socket.send(JSON.stringify({'messageType': 'chatMessage', 'comment': comment, 'target': target, 'Emoji': '0'}));
         }
         catch(e){
-			alert("Error");
+			alert("程序报错");
 		}
     }
 }
@@ -31,6 +40,7 @@ function sendMessage() {
 // Renders a new chat message to the page
 function addMessage(chatMessage) {
     let chat = document.getElementById('chat');
+    console.log("<b>" + chatMessage['username'] + "</b>: " + chatMessage["comment"] + "<br/>")
     chat.innerHTML += "<b>" + chatMessage['username'] + "</b>: " + chatMessage["comment"] + "<br/>";
 }
 
