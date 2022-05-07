@@ -42,7 +42,7 @@ def login():
     app.secret_key = salt  # 设置随机生成salt
     db = MongoDB.mongoDB()
     if request.method == 'GET':
-        return render_template('index.html')
+        return render_template('signin.html')
 
     if request.form.keys().__contains__("NewUsername"):
         username = request.form.get("NewUsername")  #获取注册表单里的username
@@ -50,7 +50,7 @@ def login():
         hashed_password = hashlib.sha224(password.encode() + salt).hexdigest()  #哈希加盐
         db.addInfo(username, hashed_password, salt)  #存入数据库
         db.addProfile(username, "N/A", "N/A", "N/A", "N/A")
-        return render_template("index.html", successfully="Your account has been created successfully!")
+        return render_template("signin.html", successfully="Your account has been created successfully!")
 
     else:
         '''这里要判断用户名,hash值, salt是否存于database'''
@@ -60,7 +60,7 @@ def login():
         user_info = db.findInfo(username)        # 数据库查找username信息
         #如果找不到username直接放回
         if user_info is None:
-            return render_template("index.html", failed="wrong password or username")
+            return render_template("signin.html", failed="wrong password or username")
         salt, stored_password = user_info["salt"], user_info["password"]  #存于数据的秘密和盐
         hashed_password = hashlib.sha224(password.encode() + salt).hexdigest()
         if hashed_password == stored_password:   #判断密码是否配对
@@ -69,7 +69,7 @@ def login():
             response.set_cookie("userToken", AuthenticationToken, max_age=3600)   #设置cookie
             return response
         else:
-            return render_template("index.html", failed="wrong password or username")
+            return render_template("signin.html", failed="wrong password or username")
 
 
 # 访问用户profile
