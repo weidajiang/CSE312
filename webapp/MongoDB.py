@@ -50,6 +50,13 @@ class mongoDB:
         result = self.Profile.find_one({"username": username})
         return result
 
+    def addChat(self, sendFrom, sendTo, comment):
+
+        data = {"from": sendFrom,
+                "to": sendTo,
+                "comment": comment}
+        self.InfoProject.insert_one(data)
+
 
 
 

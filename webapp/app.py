@@ -151,18 +151,23 @@ def websocket(socket):
         # html character escape
         data = json.loads(data)
         data['username'] = username
-        # 判断是否为Emoji类型
-        if data['Emoji'] == '0':
-            data['comment'] = data['comment'].replace("\r\n", "").replace("&", "&amp").replace(">", "&gt").replace("<", "&lt")
-            data['username'] = data['username'].replace("\r\n", "").replace("&", "&amp").replace(">", "&gt").replace("<", "&lt")
+        print(data)
         if data['messageType'].__contains__("webRTC"):
             data = json.dumps(data)
             for c in clients:
                 if clients[c] != socket:
                     clients[c].send(data)
+        # 判断是否为Emoji类型
         else:
+
+            if data['Emoji'] == '0':
+                data['comment'] = data['comment'].replace("\r\n", "").replace("&", "&amp").replace(">", "&gt").replace("<", "&lt")
+                data['username'] = data['username'].replace("\r\n", "").replace("&", "&amp").replace(">", "&gt").replace("<", "&lt")
+
+
             # 公屏聊天
             target_user = data['target']
+            db.addChat(username, target_user, data["comment"])
             if target_user == 'All users':
                 data = json.dumps(data)
                 try:

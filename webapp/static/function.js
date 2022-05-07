@@ -19,6 +19,16 @@ function Emoji(value) {
     socket.send(JSON.stringify({'messageType': 'chatMessage', 'comment': value, 'target': target, 'Emoji': '1'}));
 }
 
+function test() {
+    const chatBox1 = document.getElementById("EmojiTable");
+    if (chatBox1.hidden){
+        chatBox1.hidden = false;
+    }
+    else{
+        chatBox1.hidden = true;
+    }
+}
+
 function sendMessage() {
 
     const chatBox = document.getElementById("chat-comment");
@@ -40,6 +50,7 @@ function sendMessage() {
 // Renders a new chat message to the page
 function addMessage(chatMessage) {
     let chat = document.getElementById('chat');
+    alert("New message :)")
     console.log("<b>" + chatMessage['username'] + "</b>: " + chatMessage["comment"] + "<br/>")
     chat.innerHTML += "<b>" + chatMessage['username'] + "</b>: " + chatMessage["comment"] + "<br/>";
 }
