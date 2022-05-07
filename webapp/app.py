@@ -23,17 +23,17 @@ app.url_map.converters['regex'] = RegexConverter
 clients = {}
 
 
-#设置网页图标
-@app.route('/favicon.ico')
-def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
-
-
-#设置css
-@app.route('/style.css')
-def css_file():
-    return send_from_directory(os.path.join(app.root_path, 'static'), 'style.css')
-
+# #设置网页图标
+# @app.route('/favicon.ico')
+# def favicon():
+#     return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
+#
+#
+# #设置css
+# @app.route('/style.css')
+# def css_file():
+#     return send_from_directory(os.path.join(app.root_path, 'static'), 'style.css')
+#
 
 @app.route('/', methods=["GET", "POST"])
 def login():
@@ -93,12 +93,12 @@ def userPage():
     print(1)
 
 
-#访问meHotel
-@app.route('/kiwi')
-def kiwi():
-    with open("static/kiwi-removebg-preview.png", "rb") as f:
-        file = f.read()
-    return file
+# #访问meHotel
+# @app.route('/kiwi')
+# def kiwi():
+#     with open("static/kiwi-removebg-preview.png", "rb") as f:
+#         file = f.read()
+#     return file
 
 
 #通过正则表达式来判断路径是否为 /profile/(username) 格式
@@ -135,9 +135,9 @@ def chat():
     return render_template("chat.html", username=username, onlines=render_text, profileLink=f'http://127.0.0.1:5000/profile/{username}')
 
 
-@app.route("/function.js")
-def static_dir(path):
-    return send_from_directory("static", path)
+# @app.route("/function.js")
+# def static_dir(path):
+#     return send_from_directory("static", path)
 
 
 #暂时模拟websocket, 响应牵手, socketio用不明白只能用这个来代替了(我是傻逼)

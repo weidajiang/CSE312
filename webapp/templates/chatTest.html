@@ -22,11 +22,11 @@
                     return;
                 }
                 if(Who.value == 0){
-	                //如果Who.value为0n那么是 A说
-                    str = '<div class="atalk"><span>A说 :' + TalkWords.value +'</span></div>';
+	                //如果Who.value为0n那么是 群聊
+                    str = '<div class="atalk"><span>Me :' + TalkWords.value +'</span></div>';
                 }
                 else{
-                    str = '<div class="btalk"><span>B说 :' + TalkWords.value +'</span></div>' ;
+                    str = '<div class="btalk"><span>corresponding username :' + TalkWords.value +'</span></div>' ;
                 }
                 Words.innerHTML = Words.innerHTML + str;
             }
