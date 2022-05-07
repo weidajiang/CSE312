@@ -10,6 +10,7 @@ from flask import render_template, request, send_from_directory, Flask, redirect
 
 
 #让route可以以正则表达式的形式
+# IDK
 class RegexConverter(BaseConverter):
     def __init__(self, url_map, *items):
         super(RegexConverter, self).__init__(url_map)
