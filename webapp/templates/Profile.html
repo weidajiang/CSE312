@@ -4,8 +4,26 @@
         <link rel="shortcut icon" href="{{url_for('static',filename='img/favicon.ico')}}" type="image/x-icon"/>
     </head>
     <body>
+        <form action='/image-upload',method="post">
+            <td>
+                Avatar:
+            </td>
+            <td>
+                <input type="file" name = "filename" id="upload_file" accept="image/*">
+                <input type="submit" value="Update">
+            </td>
+        </form>
+
         <form method="post" enctype="multipart/form-data">
             <table width="400">
+                <tr>
+                    <td>
+                        Email:
+                    </td>
+                    <td>
+                        <input type="email" name="email">
+                    </td>
+                </tr>
                 <tr>
                     <td>
                         Sex:
@@ -20,32 +38,7 @@
                         Birth Day:
                     </td>
                     <td>
-                         <select name="year">
-                             <option> Year </option>
-                             <option> 2004 </option>
-                             <option> 2003 </option>
-                             <option> 2002 </option>
-                             <option> 2001 </option>
-                             <option> 1999 </option>
-                             <option> 1998 </option>
-                             <option> 1997 </option>
-                             <option> 1996 </option>
-                         </select>
-                        <select name="month">
-                             <option> Month </option>
-                             <option> Jan </option>
-                             <option> Feb </option>
-                             <option> Mar </option>
-                             <option> Apr </option>
-                             <option> May </option>
-                             <option> Jun </option>
-                             <option> Jul </option>
-                             <option> Aug </option>
-                             <option> Sep </option>
-                             <option> Oct </option>
-                             <option> Nov </option>
-                             <option> Dec </option>
-                         </select>
+                         <input type="date" name="dob">
                     </td>
                 </tr>
                 <tr>
@@ -62,6 +55,19 @@
                     </td>
                     <td>
                         <input type="text" name="bio">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Status:
+                    </td>
+                    <td>
+                             <select name="status">
+                             <option> Online </option>
+                             <option> Chat me! :)</option>
+                             <option> Leaving :( </option>
+                             <option> Busy @_@ </option>
+                         </select>
                     </td>
                 </tr>
             </table>

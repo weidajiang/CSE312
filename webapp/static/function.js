@@ -14,7 +14,7 @@ document.addEventListener("keypress", function (event) {
 
 function Emoji(value) {
     console.log(value);
-    const chatBox1 = document.getElementById("send-to");
+    const chatBox1 = document.getElementById("who");
     const target = chatBox1.value;
     socket.send(JSON.stringify({'messageType': 'chatMessage', 'comment': value, 'target': target, 'Emoji': '1'}));
 }

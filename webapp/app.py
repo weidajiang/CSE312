@@ -48,7 +48,7 @@ def login():
         password = request.form.get("NewPassword")  #获取注册表单里的password
         hashed_password = hashlib.sha224(password.encode() + salt).hexdigest()  #哈希加盐
         db.addInfo(username, hashed_password, salt)  #存入数据库
-        db.addProfile(username, "N/A", "N/A", "N/A", "N/A")
+        db.addProfile(username, "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A")
         return render_template("index.html", successfully="Your account has been created successfully!")
 
     else:
@@ -79,8 +79,10 @@ def profile():
         return render_template('Profile.html')
     cookie = request.cookies.get("userToken")
     username = db.findUsernameByCookie(cookie)['username']
+    print("update")
     # 拿到当前用户profile在进行redirect
-    db.UpdateProfile(username, request.form.get("sex"), f"{request.form.get('month')}, {request.form.get('year')}", request.form.get("address"), request.form.get("bio"))
+    #email, sex, dob, address, bio, status, avatar
+    db.UpdateProfile(username, request.form.get("email"), request.form.get("sex"), request.form.get("dob"), request.form.get("address"), request.form.get("bio"),request.form.get("status"))
     response = redirect(f"http://127.0.0.1:5000/profile/{username}")
     return response
 
@@ -101,23 +103,38 @@ def kiwi():
     return file
 
 
+@app.route('/image-upload')
+def upload():
+    print(request.files)
+    print(request.form)
+
+    filename = request.values['filename']
+    file = open(filename,'rb')
+    print(file)
+
+
 #通过正则表达式来判断路径是否为 /profile/(username) 格式
-@app.route('/profile/<regex("[a-z]*"):username>')
+@app.route('/profile/<regex("[a-z0-9]*"):username>')
 def profilePage(username):
     db = MongoDB.mongoDB()
     cookie = request.cookies.get("userToken")   #拿到cookie
+    print(cookie)
     stored_username = db.findUsernameByCookie(cookie)['username']  #通过cookie拿到username
     db = MongoDB.mongoDB()
     # 拿到当前username的profile
     info = db.findProfile(username)
     # 如果是本人提供修改profile选项
+    # email, sex, dob, address, bio, status, avatar
     if username == stored_username:
-        return render_template("userProfile.html", username=f"Username:   {username}", sex=f"Sex:   {info['sex']}",
-                               birth=f"Birthday:   {info['year']}", address=f"Address:   {info['address']}", bio=f"Bio:   {info['bio']}")
+        print(info)
+        return render_template("userProfile.html", username=f"Username:   {username}", email=f"Email:  {info['email']}", sex =f"Sex:   {info['sex']}",
+                                dob = f"Birthday : {info['dob']}", address=f"Address:   {info['address']}", bio=f"Bio:   {info['bio']}",
+                                status = f"Status:   {info['status']}", avatar=f"Avatar:   {info['avatar']}")
     # 不是本人只能游览
     else:
-        return render_template("userProfile.html", username=f"Username:   {username}", sex=f"Sex:   {info['sex']}",
-                               birth=f"Birthday:   {info['year']}", address=f"Address:   {info['address']}", bio=f"Bio:   {info['bio']}", hidden="visibility: hidden")
+        return render_template("userProfile.html", username=f"Username:   {username}", email=f"Email:  {info['email']}", sex=f"Sex:   {info['sex']}",
+                                dob = f"Birthday : {info['dob']}", address=f"Address:   {info['address']}", bio=f"Bio:   {info['bio']}",
+                                status = f"Status:   {info['status']}", avatar=f"Avatar:   {info['avatar']}", hidden="visibility: hidden")
 
 
 # 聊天室页面
