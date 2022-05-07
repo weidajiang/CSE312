@@ -103,7 +103,7 @@ def kiwi():
     return file
 
 
-@app.route('/image-upload')
+@app.route('/image-upload',methods = ["GET","POST"])
 def upload():
     print(request.files)
     print(request.form)
