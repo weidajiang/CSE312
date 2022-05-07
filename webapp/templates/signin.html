@@ -14,24 +14,28 @@
 
     <!-- Custom styles for this template -->
     <link href="../static/css/signin.css" rel="stylesheet">
+    <script>
+        function signup(){
+            location.href="signup.html";
+        }
+
+    </script>
 </head>
 
-
-
 <body class="text-center">
-<form class="form-signin" method="post" enctype="multipart/form-data" >
+<form class="form-signin" method="post" enctype="multipart/form-data">
     <img class="mb-1" src="../static/image/bird.gif" alt="" width="120" height="90">
     <img class="mb-1" src="../static/image/bird.gif" alt="" width="120" height="90">
     <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail" class="sr-only">Username</label>
-    <input  name="username" type="email" id="inputEmail" class="form-control" placeholder=Username required autofocus>
-    <label for="inputPassword" class="sr-only">Password</label>
+    <label for="inputEmail" class="sr-only"></label>
+    <input name="username" type="email" id="inputEmail" class="form-control" placeholder=Username required autofocus>
+    <label for="inputPassword" class="sr-only"></label>
     <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
     <div class="checkbox mb-3">
     </div>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-     <div class="checkbox mb-3">
-
+    <button class="btn btn-lg btn-primary btn-block" onclick="signup();">Sign up</button>
+    <div class="checkbox mb-3">
     </div>
     <img class="mb-1" src="../static/image/bird.gif" alt="" width="120" height="90">
     <img class="mb-1" src="../static/image/bird.gif" alt="" width="120" height="90">
