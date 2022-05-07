@@ -19,6 +19,16 @@ function Emoji(value) {
     socket.send(JSON.stringify({'messageType': 'chatMessage', 'comment': value, 'target': target, 'Emoji': '1'}));
 }
 
+function test() {
+    const chatBox1 = document.getElementById("EmojiTable");
+    if (chatBox1.hidden){
+        chatBox1.hidden = false;
+    }
+    else{
+        chatBox1.hidden = true;
+    }
+}
+
 function sendMessage() {
 
     const chatBox = document.getElementById("chat-comment");
