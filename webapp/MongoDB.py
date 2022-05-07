@@ -14,7 +14,6 @@ class mongoDB:
         self.Profile = Profile
 
     def addInfo(self, username, password, salt):
-
         data = {"username": username,
                 "password": password,
                 "salt": salt}
