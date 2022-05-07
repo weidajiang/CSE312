@@ -20,8 +20,28 @@
             overflow:auto;
         }
 
-.btalk{
+.metalk{
             margin:10px;
             text-align:right;
         }
 
+.metalk span{
+            display:inline-block;
+            background:#0181cc;
+            border-radius:10px;
+            color:#fff;
+            padding:5px 10px;
+        }
+
+.elsetalk{
+            margin:10px;
+            text-align:right;
+        }
+
+.elsetalk span{
+            display:inline-block;
+            background: #4801ef;
+            border-radius:10px;
+            color:#fff;
+            padding:5px 10px;
+        }
