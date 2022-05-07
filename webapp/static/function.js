@@ -32,9 +32,9 @@ function test() {
 function sendMessage() {
 
     const chatBox = document.getElementById("chat-comment");
-    const chatBox1 = document.getElementById("send-to");
+    const toWho = document.getElementById("who");
     const comment = chatBox.value;
-    const target = chatBox1.value;
+    const target = toWho.value;
     chatBox.value = "";
     chatBox.focus();
     if (comment !== "") {
@@ -50,9 +50,11 @@ function sendMessage() {
 // Renders a new chat message to the page
 function addMessage(chatMessage) {
     let chat = document.getElementById('chat');
-    alert("New message :)")
+    var Words = document.getElementById("words");
+    Words.innerHTML += '<div class="atalk"><span>'+ chatMessage['username'] +' :' + chatMessage["comment"] +'</span></div>';
+//    alert("New message :)")
     console.log("<b>" + chatMessage['username'] + "</b>: " + chatMessage["comment"] + "<br/>")
-    chat.innerHTML += "<b>" + chatMessage['username'] + "</b>: " + chatMessage["comment"] + "<br/>";
+
 }
 
 // called when the page loads to get the chat_history
