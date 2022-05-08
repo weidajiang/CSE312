@@ -33,16 +33,26 @@ class mongoDB:
         result = self.Cookies.find_one({"token": cookie})
         return result
 
-    def addProfile(self, username, sex, year, address, bio):
+    # 用户名，邮箱，性别，生日，地址，个签，状态，头像
+    def addProfile(self, username, email, sex, dob, address, bio, status, avatar):
         data = {"username": username,
+                "email": email,
                 "sex": sex,
-                "year": year,
+                "dob": dob,
                 "address": address,
-                "bio": bio}
+                "bio": bio,
+                "status": status,
+                "avatar": avatar
+                }
         self.Profile.insert_one(data)
 
-    def UpdateProfile(self, username, sex, birth, address, bio):
-        new_value = {"$set": {"sex": sex, "year": birth, "address": address, "bio": bio}}
+    def UpdateProfile(self, username, email, sex, dob, address, bio, status):
+        new_value = {"$set": {"email": email, "sex": sex, "dob": dob, "address": address, "bio": bio, "status": status}}
+        target = {"username": username}
+        self.Profile.update_one(target, new_value)
+
+    def Update_photo(self, username, avatar):
+        new_value = {"$set": {"avatar": avatar}}
         target = {"username": username}
         self.Profile.update_one(target, new_value)
 

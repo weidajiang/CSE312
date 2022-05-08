@@ -55,156 +55,82 @@
       </div>
     </nav>
 
+ <main role="main" class="container">
 
-    <main role="main" class="container">
 
-
-      <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple rounded box-shadow">
-        <img class="mr-3" src="../static/image/bird.gif" alt="" width="48" height="48">
+    <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple rounded box-shadow">
+<!--database-->
+        <img class="mr-3" src="../static/user_photo/{{avatar}}" alt="" width="48" height="48">
         <div class="lh-100">
-          <h6 class="mb-0 text-white lh-100">Test Page</h6>
+          <h6 class="mb-0 text-white lh-100">{{username}}'s Personal Space</h6>
           <small>From Group 404</small>
         </div>
       </div>
 <!--先显示原始数据-->
-      <div class="my-3 p-3 bg-white rounded box-shadow" >
+      <br class="my-3 p-3 bg-white rounded box-shadow" >
         <h6 class="border-bottom border-gray pb-2 mb-0">Profile</h6>
-        <form method="post" enctype="multipart/form-data">
+        <p>Username: {{username}}</p>
+        <p>Email: {{email}}</p>
+        <p>Sex: {{sex}}</p>
+        <p>Birthday: {{dob}}</p>
+        <p>Address: {{address}}</p>
+        <p>Bio: {{bio}}</p>
+        <p>Status: {{status}}</p>
+        <br>
+        <!-- 上半部分是user profile 页面 下半部分是update profile -->
+      </br>
+
+      <form action="/profile" method="post" enctype="multipart/form-data">
             <table width="400">
                 <tr>
                     <td>
-                        email:
+                        Email:
                     </td>
                     <td>
-                        email_from_database
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        sex:
-                    </td>
-                    <td>
-                        sex_from_database
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        dob:
-                    </td>
-                    <td>
-                        birthday_from_database
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        address:
-                    </td>
-                    <td>
-                        address_from_database
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        bio:
-                    </td>
-                    <td>
-                        Bio_from_database
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        status:
-                    </td>
-                    <td>
-                        status_from_database
-                    </td>
-                </tr>
-            </table>
-        </form>
-            <form method="post" enctype="multipart/form-data" >
-                <table width="400" >
-                <tr>
-                    <td>
-                        email:
-                    </td>
-                    <td>
-                        <input type="text" name="email">
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        sex:
-                    </td>
-                    <td>
-                        <input type="radio" name="sex", value="male">Male
-                        <input type="radio" name="sex", value="female">Female
-                        <input type="radio" name="sex", value="unknown">Prefer not to answer
+                        <input type="email" name="email" value="{{email}}">
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        dob:
+                        Sex:
                     </td>
                     <td>
-                         <select name="year">
-                             <option> Year </option>
-                             <option> 2004 </option>
-                             <option> 2003 </option>
-                             <option> 2002 </option>
-                             <option> 2001 </option>
-                             <option> 1999 </option>
-                             <option> 1998 </option>
-                             <option> 1997 </option>
-                             <option> 1996 </option>
-                         </select>
-                        <select name="month">
-                             <option> Month </option>
-                             <option> Jan </option>
-                             <option> Feb </option>
-                             <option> Mar </option>
-                             <option> Apr </option>
-                             <option> May </option>
-                             <option> Jun </option>
-                             <option> Jul </option>
-                             <option> Aug </option>
-                             <option> Sep </option>
-                             <option> Oct </option>
-                             <option> Nov </option>
-                             <option> Dec </option>
-                         </select>
+                        <input type="radio" name="sex", value="Male" >Male
+                        <input type="radio" name="sex", value="Female" >Female
+                        <input type="radio" name="sex", value="Unknown" checked>Prefer not to answer
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        address:
+                        Birth Day:
                     </td>
                     <td>
-                        <input type="text" name="address">
+                         <input type="date" name="dob" value="{{dob}}">
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        bio:
+                        Address:
                     </td>
                     <td>
-                        <input type="text" name="bio">
+                        <input type="text" name="address" value="{{address}}">
                     </td>
                 </tr>
-
                 <tr>
                     <td>
-                        status:
+                        Bio:
                     </td>
                     <td>
-                        <select name="status">
-                             <option> status </option>
-                             <option> Online </option>
+                        <input type="text" name="bio" value="{{bio}}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Status:
+                    </td>
+                    <td>
+                             <select name="status">
+                             <option selected> Online </option>
                              <option> Sleepy </option>
                              <option> Working </option>
                              <option> Busy </option>
@@ -216,18 +142,29 @@
                     </td>
                 </tr>
             </table>
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Update</button>
-        </form>
+            <input type="submit" value="Update">
+      </form>
+
+
+      <form action='/image-upload' method="post" enctype="multipart/form-data">
+            <td>
+                Avatar:
+            </td>
+            <td>
+                <input type="file" name = "filename" id="upload_file" accept="image/*">
+                <input type="submit" value="Upload">
+            </td>
+      </form>
+
         <small class="d-block text-right mt-3">
-          <a href="#">Return</a>
+          <a href="http://127.0.0.1:5000/chat">Return</a>
         </small>
       </div>
     </main>
 
 
 
-
-     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script>window.jQuery || document.write('<script src="../static/js/jquery-slim.min.js"><\/script>')</script>
     <script src="../static/js/popper.min.js"></script>
     <script src="../static/js/bootstrap.min.js"></script>

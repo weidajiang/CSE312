@@ -49,11 +49,11 @@
 
     <!-- Custom styles for this template -->
     <link href="../static/css/signin.css" rel="stylesheet">
-<!--    <script>-->
-<!--        function signup(){-->
-<!--            location.href="signup.html";-->
-<!--        }-->
-<!--    </script>-->
+    <script>
+        function signup(){
+            location.href="http://127.0.0.1:5000/signup";
+        }
+    </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 
@@ -69,7 +69,7 @@
     <div class="checkbox mb-3">
     </div>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-    <button type="button" class="btn btn-lg btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#modalSignin">Sign up</button>
+    <button type="button" class="btn btn-lg btn-primary btn-block" data-bs-toggle="modal" onclick="signup();" data-bs-target="#modalSignin">Sign up</button>
     <div class="checkbox mb-3">
     </div>
     <img class="mb-1" src="../static/image/bird.gif" alt="" width="120" height="90">
@@ -99,7 +99,7 @@
                                placeholder="Password">
                         <label for="floatingPassword">Password</label>
                     </div>
-                    <button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" type="submit">Sign up</button>
+                    <button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" type="submit" onclick="signup();">Sign up</button>
                 </form>
             </div>
         </div>
