@@ -63,7 +63,7 @@
 <!--database-->
         <img class="mr-3" src="{{ avatar }}" alt="" width="48" height="48">
         <div class="lh-100">
-          <h6 class="mb-0 text-white lh-100">Test Page</h6>
+          <h6 class="mb-0 text-white lh-100">{{username}}'s Personal Space</h6>
           <small>From Group 404</small>
         </div>
       </div>
@@ -96,9 +96,9 @@
                         Sex:
                     </td>
                     <td>
-                        <input type="radio" name="sex", value="male" >Male
-                        <input type="radio" name="sex", value="female" >Female
-                        <input type="radio" name="sex", value="unknown" checked>Prefer not to answer
+                        <input type="radio" name="sex", value="Male" >Male
+                        <input type="radio" name="sex", value="Female" >Female
+                        <input type="radio" name="sex", value="Unknown" checked>Prefer not to answer
                     </td>
                 </tr>
                 <tr>
@@ -131,7 +131,6 @@
                     </td>
                     <td>
                              <select name="status">
-                             <option> status </option>
                              <option selected> Online </option>
                              <option> Sleepy </option>
                              <option> Working </option>
@@ -159,7 +158,7 @@
       </form>
 
         <small class="d-block text-right mt-3">
-          <a href="#">Return</a>
+          <a href="http://127.0.0.1:5000/chat">Return</a>
         </small>
       </div>
     </main>
