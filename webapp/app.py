@@ -166,6 +166,10 @@ def allUser():
     return render_template("ALLusers.html", username=username, onlines=render_text, users=render_text)
 
 
+@app.route("/about")
+def AboutUs():
+    return render_template("AboutUs.html")
+
 
 #暂时模拟websocket, 响应牵手, socketio用不明白只能用这个来代替了(我是傻逼)
 @sock.route('/websocket')
