@@ -105,19 +105,35 @@ def kiwi():
 
 @app.route('/image-upload', methods=["POST"])
 def upload():
+    db = MongoDB.mongoDB()
+    cookie = request.cookies.get("userToken")  # 拿到cookie
+    username = db.findUsernameByCookie(cookie)['username']  # 通过cookie拿到username
+    info = db.findInfo(username)
+    salt = info["salt"]
+
     filename = request.files['filename']
     file = filename.read()
-    type_temp = filename.filename.split(".")[-1]
-    cookie = request.cookies.get("userToken")  # 拿到cookie
-    name = cookie+'.'+type_temp
-    f = open('./user_photo/'+name, 'wb')
+    type_temp = filename.filename.split(".")[-1]# 拿到后缀
+    salt = salt.decode().replace(".", "").replace("/","")
+
+    print("salt119",salt)
+    name = './user_photo/'+salt+'.'+type_temp
+    f = open(name, 'wb')
     f.write(file)
     f.close()
-    db = MongoDB.mongoDB()
-    username = db.findUsernameByCookie(cookie)['username']  # 通过cookie拿到username
+
+    db.Update_photo(username, name)
 
     response = redirect(f"http://127.0.0.1:5000/profile/{username}")
     return response
+
+@app.route('/user_photo/<regex(".*"):localpath>', methods=["GET","POST"])
+def picture(localpath):
+    img_path = './user_photo/'+localpath
+    with open(img_path, 'rb') as img_f:
+        img = img_f.read()
+        img_f.close()
+    return img
 
 
 #通过正则表达式来判断路径是否为 /profile/(username) 格式
@@ -135,15 +151,15 @@ def profilePage(username):
     # email, sex, dob, address, bio, status, avatar
 
     if username == stored_username:
-        print(info)
+        print(f".{info['avatar']}")
         return render_template("userProfile.html", username=f"Username:   {username}", email=f"Email:  {info['email']}", sex =f"Sex:   {info['sex']}",
                                 dob = f"Birthday : {info['dob']}", address=f"Address:   {info['address']}", bio=f"Bio:   {info['bio']}",
-                                status = f"Status:   {info['status']}")
+                                status = f"Status:   {info['status']}", avatar=f".{info['avatar']}")
     # 不是本人只能游览
     else:
         return render_template("userProfile.html", username=f"Username:   {username}", email=f"Email:  {info['email']}", sex=f"Sex:   {info['sex']}",
                                 dob = f"Birthday : {info['dob']}", address=f"Address:   {info['address']}", bio=f"Bio:   {info['bio']}",
-                                status = f"Status:   {info['status']}", hidden="visibility: hidden")
+                                status = f"Status:   {info['status']}", avatar=f".{info['avatar']}", hidden="visibility: hidden")
 
 
 # 聊天室页面

@@ -50,9 +50,10 @@ class mongoDB:
         target = {"username": username}
         self.Profile.update_one(target, new_value)
 
-
-    # def Update_photo(self,avatar):
-    #
+    def Update_photo(self,username,avatar):
+        new_value = {"$set": {"avatar": avatar}}
+        target = {"username": username}
+        self.Profile.update_one(target, new_value)
 
     def findProfile(self, username):
         result = self.Profile.find_one({"username": username})
