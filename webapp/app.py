@@ -102,7 +102,7 @@ def kiwi():
 
 
 #通过正则表达式来判断路径是否为 /profile/(username) 格式
-@app.route('/profile/<regex("[a-z]*"):username>')
+@app.route('/profile/<regex("[a-z0-9]*"):username>')
 def profilePage(username):
     db = MongoDB.mongoDB()
     cookie = request.cookies.get("userToken")   #拿到cookie
@@ -129,10 +129,13 @@ def chat():
     clients[username] = ""
     # 显示当前聊天室里的人  这里有一个bug
     render_text = []
+    render_text2 = []
+
     for c in clients:
         if c not in render_text:
             render_text.append(c)
-    return render_template("chat.html", username=username, onlines=render_text, profileLink=f'http://127.0.0.1:5000/profile/{username}', users=render_text)
+            render_text2.append((c, db.findProfile(c)['bio']))
+    return render_template("test.html", username=username, onlines=render_text, users=render_text, onlines2=render_text2)
 
 
 @app.route("/function.js")
@@ -158,7 +161,9 @@ def websocket(socket):
                 if clients[c] != socket:
                     clients[c].send(data)
         # 判断是否为Emoji类型
+
         else:
+            print(data)
             if data['Emoji'] == '0':
                 data['comment'] = data['comment'].replace("\r\n", "").replace("&", "&amp").replace(">", "&gt").replace("<", "&lt")
                 data['username'] = data['username'].replace("\r\n", "").replace("&", "&amp").replace(">", "&gt").replace("<", "&lt")

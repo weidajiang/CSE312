@@ -12,9 +12,10 @@ document.addEventListener("keypress", function (event) {
 
 // Read the comment the user is sending to chat and send it to the server over the WebSocket as a JSON string
 
+
 function Emoji(value) {
     console.log(value);
-    const chatBox1 = document.getElementById("send-to");
+    const chatBox1 = document.getElementById("who");
     const target = chatBox1.value;
     socket.send(JSON.stringify({'messageType': 'chatMessage', 'comment': value, 'target': target, 'Emoji': '1'}));
 }
@@ -29,8 +30,18 @@ function test() {
     }
 }
 
-function sendMessage() {
+function chatRoom() {
+    const chatBox1 = document.getElementById("chatRoom");
+    if (chatBox1.hidden){
+        chatBox1.hidden = false;
+    }
+    else{
+        chatBox1.hidden = true;
+    }
+}
 
+
+function sendMessage() {
     const chatBox = document.getElementById("chat-comment");
     const toWho = document.getElementById("who");
     const comment = chatBox.value;
@@ -49,9 +60,11 @@ function sendMessage() {
 
 // Renders a new chat message to the page
 function addMessage(chatMessage) {
+
     let chat = document.getElementById('chat');
     var Words = document.getElementById("words");
     Words.innerHTML += '<div class="atalk"><span>'+ chatMessage['username'] +' :' + chatMessage["comment"] +'</span></div>';
+    document.querySelector(".atalk").scrollIntoView({behavior: "smooth"})
 //    alert("New message :)")
     console.log("<b>" + chatMessage['username'] + "</b>: " + chatMessage["comment"] + "<br/>")
 

@@ -1,0 +1,19 @@
+<html>
+    <head>
+        <title>User Page</title>
+        <link rel="shortcut icon" href="{{url_for('static',filename='img/favicon.ico')}}" type="image/x-icon"/>
+    </head>
+    <body>
+        <form method="post" enctype="multipart/form-data">
+            <tr>
+                <td>
+                    Avatar:
+                </td>
+                <td>
+                    <input type="file" name = "filename" id="upload_file" accept="image/*">
+                    <input type="submit" value="Update">
+                </td>
+            </tr>
+        </form>
+    </body>
+</html>
