@@ -134,12 +134,18 @@ def chat():
         if c not in render_text:
             render_text.append(c)
             render_text2.append((c, db.findProfile(c)['bio']))
-    return render_template("test.html", username=username, onlines=render_text, users=render_text, onlines2=render_text2)
+    return render_template("mainPage.html", username=username, onlines=render_text, users=render_text, onlines2=render_text2)
 
 
 @app.route("/function.js")
 def static_dir(path):
     return send_from_directory("static", path)
+
+
+@app.route("/about")
+def AboutUs():
+    return render_template("AboutUs.html")
+
 
 
 @app.route("/allevents")
