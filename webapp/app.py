@@ -48,7 +48,7 @@ def login():
         password = request.form.get("NewPassword")  #获取注册表单里的password
         hashed_password = hashlib.sha224(password.encode() + salt).hexdigest()  #哈希加盐
         db.addInfo(username, hashed_password, salt)  #存入数据库
-        db.addProfile(username, "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A")
+        db.addProfile(username, "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "./user_photo/bird.gif")
         return render_template("index.html", successfully="Your account has been created successfully!")
 
     else:
