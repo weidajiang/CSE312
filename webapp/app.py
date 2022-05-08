@@ -135,8 +135,9 @@ def picture(localpath):
         img_f.close()
     return img
 
+
 #通过正则表达式来判断路径是否为 /profile/(username) 格式
-@app.route('/profile/<regex("[a-z0-9]*"):username>')
+@app.route('/profile/<regex("[a-z0-9]*"):username>', methods=["GET","POST"])
 def profilePage(username):
     db = MongoDB.mongoDB()
     cookie = request.cookies.get("userToken")   #拿到cookie
@@ -151,14 +152,14 @@ def profilePage(username):
 
     if username == stored_username:
         print(f".{info['avatar']}")
-        return render_template("userProfile.html", username=f"Username:   {username}", email=f"Email:  {info['email']}", sex =f"Sex:   {info['sex']}",
-                                dob = f"Birthday : {info['dob']}", address=f"Address:   {info['address']}", bio=f"Bio:   {info['bio']}",
-                                status = f"Status:   {info['status']}", avatar=f".{info['avatar']}")
+        return render_template("Profile.html",username=f"{username}", email=f"{info['email']}", sex=f"{info['sex']}",
+                                dob =f"{info['dob']}", address=f"{info['address']}", bio=f"{info['bio']}",
+                                status =f" {info['status']}", avatar=f".{info['avatar']}")
     # 不是本人只能游览
     else:
-        return render_template("userProfile.html", username=f"Username:   {username}", email=f"Email:  {info['email']}", sex=f"Sex:   {info['sex']}",
-                                dob = f"Birthday : {info['dob']}", address=f"Address:   {info['address']}", bio=f"Bio:   {info['bio']}",
-                                status = f"Status:   {info['status']}", avatar=f".{info['avatar']}", hidden="visibility: hidden")
+        return render_template("Profile.html", username=f"{username}", email=f"{info['email']}", sex=f"{info['sex']}",
+                                dob =f"{info['dob']}", address=f"{info['address']}", bio=f"{info['bio']}",
+                                status =f" {info['status']}", avatar=f".{info['avatar']}", hidden="visibility: hidden")
 
 
 # 聊天室页面
