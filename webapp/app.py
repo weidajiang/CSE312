@@ -1,6 +1,5 @@
 import bcrypt
 import os
-
 import MongoDB
 import hashlib
 import random
@@ -43,14 +42,13 @@ def login():
     db = MongoDB.mongoDB()
     if request.method == 'GET':
         return render_template('signin.html')
-
     if request.form.keys().__contains__("NewUsername"):
         username = request.form.get("NewUsername")  #获取注册表单里的username
         password = request.form.get("NewPassword")  #获取注册表单里的password
         hashed_password = hashlib.sha224(password.encode() + salt).hexdigest()  #哈希加盐
         db.addInfo(username, hashed_password, salt)  #存入数据库
         db.addProfile(username, "N/A", "N/A", "N/A", "N/A")
-        return render_template("signin.html", successfully="Your account has been created successfully!")
+        return render_template("index.html", successfully="Your account has been created successfully!")
 
     else:
         '''这里要判断用户名,hash值, salt是否存于database'''
@@ -60,7 +58,7 @@ def login():
         user_info = db.findInfo(username)        # 数据库查找username信息
         #如果找不到username直接放回
         if user_info is None:
-            return render_template("signin.html", failed="wrong password or username")
+            return render_template("index.html", failed="wrong password or username")
         salt, stored_password = user_info["salt"], user_info["password"]  #存于数据的秘密和盐
         hashed_password = hashlib.sha224(password.encode() + salt).hexdigest()
         if hashed_password == stored_password:   #判断密码是否配对
@@ -69,7 +67,7 @@ def login():
             response.set_cookie("userToken", AuthenticationToken, max_age=3600)   #设置cookie
             return response
         else:
-            return render_template("signin.html", failed="wrong password or username")
+            return render_template("index.html", failed="wrong password or username")
 
 
 # 访问用户profile
@@ -103,7 +101,7 @@ def kiwi():
 
 
 #通过正则表达式来判断路径是否为 /profile/(username) 格式
-@app.route('/profile/<regex("[a-z]*"):username>')
+@app.route('/profile/<regex("[a-z0-9]*"):username>')
 def profilePage(username):
     db = MongoDB.mongoDB()
     cookie = request.cookies.get("userToken")   #拿到cookie
@@ -130,15 +128,43 @@ def chat():
     clients[username] = ""
     # 显示当前聊天室里的人  这里有一个bug
     render_text = []
+    render_text2 = []
+
     for c in clients:
         if c not in render_text:
             render_text.append(c)
-    return render_template("chat.html", username=username, onlines=render_text, profileLink=f'http://127.0.0.1:5000/profile/{username}')
+            render_text2.append((c, db.findProfile(c)['bio']))
+            render_text2.append((c, db.findProfile(c)['bio']))
+    return render_template("mainPage.html", username=username, onlines=render_text, users=render_text, onlines2=render_text2)
 
 
 @app.route("/function.js")
 def static_dir(path):
     return send_from_directory("static", path)
+
+
+@app.route("/allevents")
+def allEvent():
+    db = MongoDB.mongoDB()
+    cookie = request.cookies.get("userToken")  #从header拿到cookie
+    username = db.findUsernameByCookie(cookie)['username']  #通过cookie拿到username
+    render_text2 = []
+    for c in clients:
+        if c not in render_text2:
+            render_text2.append((c, db.findProfile(c)['bio']))
+    return render_template("ALLEvents.html", username=username, onlines2=render_text2)
+
+@app.route("/allusers")
+def allUser():
+    db = MongoDB.mongoDB()
+    cookie = request.cookies.get("userToken")  #从header拿到cookie
+    username = db.findUsernameByCookie(cookie)['username']  #通过cookie拿到username
+    render_text = []
+    for c in clients:
+        if c not in render_text:
+            render_text.append(c)
+    return render_template("ALLusers.html", username=username, onlines=render_text, users=render_text)
+
 
 
 #暂时模拟websocket, 响应牵手, socketio用不明白只能用这个来代替了(我是傻逼)
@@ -153,20 +179,18 @@ def websocket(socket):
         # html character escape
         data = json.loads(data)
         data['username'] = username
-        print(data)
         if data['messageType'].__contains__("webRTC"):
             data = json.dumps(data)
             for c in clients:
                 if clients[c] != socket:
                     clients[c].send(data)
         # 判断是否为Emoji类型
-        else:
 
+        else:
+            print(data)
             if data['Emoji'] == '0':
                 data['comment'] = data['comment'].replace("\r\n", "").replace("&", "&amp").replace(">", "&gt").replace("<", "&lt")
                 data['username'] = data['username'].replace("\r\n", "").replace("&", "&amp").replace(">", "&gt").replace("<", "&lt")
-
-
             # 公屏聊天
             target_user = data['target']
             db.addChat(username, target_user, data["comment"])

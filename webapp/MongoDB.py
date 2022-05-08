@@ -14,6 +14,7 @@ class mongoDB:
         self.Profile = Profile
 
     def addInfo(self, username, password, salt):
+
         data = {"username": username,
                 "password": password,
                 "salt": salt}
@@ -55,10 +56,3 @@ class mongoDB:
                 "to": sendTo,
                 "comment": comment}
         self.InfoProject.insert_one(data)
-
-
-
-
-
-
-
