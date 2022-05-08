@@ -51,6 +51,8 @@ class mongoDB:
         self.Profile.update_one(target, new_value)
 
 
+    # def Update_photo(self,avatar):
+    #
 
     def findProfile(self, username):
         result = self.Profile.find_one({"username": username})
