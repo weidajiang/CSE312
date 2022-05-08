@@ -42,7 +42,6 @@ def login():
     db = MongoDB.mongoDB()
     if request.method == 'GET':
         return render_template('index.html')
-
     if request.form.keys().__contains__("NewUsername"):
         username = request.form.get("NewUsername")  #获取注册表单里的username
         password = request.form.get("NewPassword")  #获取注册表单里的password
@@ -141,6 +140,30 @@ def chat():
 @app.route("/function.js")
 def static_dir(path):
     return send_from_directory("static", path)
+
+
+@app.route("/allevents")
+def allEvent():
+    db = MongoDB.mongoDB()
+    cookie = request.cookies.get("userToken")  #从header拿到cookie
+    username = db.findUsernameByCookie(cookie)['username']  #通过cookie拿到username
+    render_text2 = []
+    for c in clients:
+        if c not in render_text2:
+            render_text2.append((c, db.findProfile(c)['bio']))
+    return render_template("ALLEvents.html", username=username, onlines2=render_text2)
+
+@app.route("/allusers")
+def allUser():
+    db = MongoDB.mongoDB()
+    cookie = request.cookies.get("userToken")  #从header拿到cookie
+    username = db.findUsernameByCookie(cookie)['username']  #通过cookie拿到username
+    render_text = []
+    for c in clients:
+        if c not in render_text:
+            render_text.append(c)
+    return render_template("ALLusers.html", username=username, onlines=render_text, users=render_text)
+
 
 
 #暂时模拟websocket, 响应牵手, socketio用不明白只能用这个来代替了(我是傻逼)
