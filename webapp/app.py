@@ -102,7 +102,7 @@ def kiwi():
         file = f.read()
     return file
 
-
+#头像的更新
 @app.route('/image-upload', methods=["POST"])
 def upload():
     db = MongoDB.mongoDB()
@@ -110,13 +110,12 @@ def upload():
     username = db.findUsernameByCookie(cookie)['username']  # 通过cookie拿到username
     info = db.findInfo(username)
     salt = info["salt"]
-
+    #拿到slat 作为文件名字 加上原文件后缀
     filename = request.files['filename']
     file = filename.read()
-    type_temp = filename.filename.split(".")[-1]# 拿到后缀
+    type_temp = filename.filename.split(".")[-1]# 拿到文件后缀
     salt = salt.decode().replace(".", "").replace("/","")
-
-    print("salt119",salt)
+    #存入分配的文件中
     name = './user_photo/'+salt+'.'+type_temp
     f = open(name, 'wb')
     f.write(file)
@@ -127,6 +126,7 @@ def upload():
     response = redirect(f"http://127.0.0.1:5000/profile/{username}")
     return response
 
+#打开对应图片文件获取头像数据
 @app.route('/user_photo/<regex(".*"):localpath>', methods=["GET","POST"])
 def picture(localpath):
     img_path = './user_photo/'+localpath
@@ -134,7 +134,6 @@ def picture(localpath):
         img = img_f.read()
         img_f.close()
     return img
-
 
 #通过正则表达式来判断路径是否为 /profile/(username) 格式
 @app.route('/profile/<regex("[a-z0-9]*"):username>')

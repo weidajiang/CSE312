@@ -4,6 +4,8 @@
         <link rel="shortcut icon" href="{{url_for('static',filename='img/favicon.ico')}}" type="image/x-icon"/>
     </head>
     <body>
+        <p>Avatar:</p>
+        <img style="width:180px" src="{{ avatar }}">
         <p>{{username}}</p>
         <p>{{email}}</p>
         <p>{{sex}}</p>
@@ -11,8 +13,6 @@
         <p>{{address}}</p>
         <p>{{bio}}</p>
         <p>{{status}}</p>
-        <p>Avatar:</p>
-        <img style="width:180px" src="{{ avatar }}">
         <p></p>
         <a href="http://127.0.0.1:5000/profile" style="{{hidden}}">Click here to update your profile</a>
         <br>
