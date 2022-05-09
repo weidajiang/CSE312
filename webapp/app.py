@@ -260,11 +260,14 @@ def websocket(socket):
             else:
                 data['comment'] = data['comment'] + '(private)'
                 data = json.dumps(data)
-                if clients[target_user] != socket:
-                    clients[target_user].send(data)
-                    socket.send(data)
-                else:
-                    socket.send(data)
+                try:
+                    if clients[target_user] != socket:
+                        clients[target_user].send(data)
+                        socket.send(data)
+                    else:
+                        socket.send(data)
+                except Exception as e:
+                    continue
 
 
 def generate_token():
