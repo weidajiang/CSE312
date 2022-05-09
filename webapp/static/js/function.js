@@ -87,6 +87,7 @@ function get_chat_history() {
 
 // Called whenever data is received from the server over the WebSocket connection
 socket.onmessage = function (ws_message) {
+
     console.log(ws_message)
     const message = JSON.parse(ws_message.data);
     const messageType = message.messageType
@@ -106,6 +107,7 @@ socket.onmessage = function (ws_message) {
             webRTCConnection.setRemoteDescription(new RTCSessionDescription(message.answer));
             break;
         case 'webRTC-candidate':
+            alert("start video")
             webRTCConnection.addIceCandidate(new RTCIceCandidate(message.candidate));
             break;
         default:

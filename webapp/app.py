@@ -282,6 +282,11 @@ def generate_token():
             token += chr(random.randint(97, 122))
     return token
 
+@app.route('/logout', methods=["GET", "POST"])
+def logOut():
+    response = redirect("http://127.0.0.1:5000/")  # 放回路径
+    response.set_cookie("userToken", "InvalidCookie", max_age=3600)
+    return response
 
 if __name__ == '__main__':
     app.run()
