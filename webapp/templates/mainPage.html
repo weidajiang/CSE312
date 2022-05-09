@@ -14,158 +14,165 @@
 
     <!-- Custom styles for this template -->
     <link href="../static/css/offcanvas.css" rel="stylesheet">
-  </head>
+</head>
 <body class="firstBody">
-    <script src="../static/js/function.js"></script>
-  <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
-      <a class="navbar-brand" href="#">Wülaàá</a>
-      <button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas">
+<script src="../static/js/function.js"></script>
+<nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Wülaàá</a>
+    <button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas">
         <span class="navbar-toggler-icon"></span>
-      </button>
+    </button>
 
-      <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+    <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-          </li>
-<!--          <li class="nav-item">-->
-<!--            <a class="nav-link" href="#">Friends</a>-->
-<!--          </li>-->
-          <li class="nav-item">
-            <a class="nav-link" href="http://127.0.0.1:5000/profile/{{username}}">Profile</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="http://127.0.0.1:5000/about#">About Us</a>
-          </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <!--          <li class="nav-item">-->
+            <!--            <a class="nav-link" href="#">Friends</a>-->
+            <!--          </li>-->
+            <li class="nav-item">
+                <a class="nav-link" href="http://127.0.0.1:5000/profile/{{username}}">Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="http://127.0.0.1:5000/about#">About Us</a>
+            </li>
 
             <li class="nav-item">
-            <a class="nav-link" href="http://127.0.0.1:5000/logout">Sign Out</a>
-          </li>
-
+                <a class="nav-link" href="http://127.0.0.1:5000/logout">Sign Out</a>
+            </li>
 
 
         </ul>
         <form class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
-      </div>
-    </nav>
+    </div>
+</nav>
 
-    <main role="main" class="container">
-      <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple rounded box-shadow">
+<main role="main" class="container">
+    <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple rounded box-shadow">
         <img class="mr-3" src="../static/image/bird.gif" alt="" width="48" height="48">
         <div class="lh-100">
-          <h6 class="mb-0 text-white lh-100">{{username}}</h6>
-          <small>From Group 404</small>
+            <h6 class="mb-0 text-white lh-100">{{username}}</h6>
+            <small>From Group 404</small>
         </div>
-      </div>
-        <div class="my-3 p-3 bg-white rounded box-shadow">
+    </div>
+    <div class="my-3 p-3 bg-white rounded box-shadow">
         <h6 class="border-bottom border-gray pb-2 mb-0">All Event</h6>
-            {% for Name in onlines2 %}
-            <div class="media text-muted pt-3">
-            <img src="../static/image/bird.gif" alt=""  width="48" height="48" class="mr-2 rounded">
+        {% for Name in onlines2 %}
+        <div class="media text-muted pt-3">
+            <img src="../static/image/bird.gif" alt="" width="48" height="48" class="mr-2 rounded">
             <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                 <strong class="d-block text-gray-dark">{{Name[0]}}</strong>
-                 {{Name[1]}}
+                {{Name[1]}}
             </p>
-            </div>
+        </div>
         {% endfor %}
-            <small class="d-block text-right mt-3">
-          <a href="http://127.0.0.1:5000/allevents">All Events</a>
+        <small class="d-block text-right mt-3">
+            <a href="http://127.0.0.1:5000/allevents">All Events</a>
         </small>
-      </div>
-      <div class="my-3 p-3 bg-white rounded box-shadow">
-          <h6 class="border-bottom border-gray pb-2 mb-0">Current Online<small class="d-block text-right mt-3">
-              <a href="#" onclick="startVideo()">Open Own Video</a>
-            </small>
-            </h6>
+    </div>
+    <div class="my-3 p-3 bg-white rounded box-shadow">
+        <h6 class="border-bottom border-gray pb-2 mb-0">Current Online<small class="d-block text-right mt-3">
+            <a href="#" onclick="startVideo()">Open Own Video</a>
+        </small>
+        </h6>
 
         <div class="media text-muted pt-3">
-          <img src="../static/image/emoji.jpeg" alt="" class="mr-2 rounded" style="width: 30px;height: 30px;">
-          <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-            <div class="d-flex justify-content-between align-items-center w-100">
-              <strong class="text-gray-dark">Chat with ALL</strong>
-              <a href="#" onclick="chatRoom();">Start Chat!</a>
+            <img src="../static/image/emoji.jpeg" alt="" class="mr-2 rounded" style="width: 30px;height: 30px;">
+            <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                <div class="d-flex justify-content-between align-items-center w-100">
+                    <strong class="text-gray-dark">Chat with ALL</strong>
+                    <a href="#" onclick="chatRoom();">Start Chat!</a>
+                </div>
             </div>
-          </div>
         </div>
 
         {% for Name in onlines %}
-          <div class="media text-muted pt-3">
+        <div class="media text-muted pt-3">
             <img class="mr-3" src="../static/image/bird.gif" alt="" width="48" height="48">
             <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-              <div class="d-flex justify-content-between align-items-center w-100">
-                <strong class="text-gray-dark">{{Name}}</strong>
-                <a href="#" onclick="connectWebRTC()">Video</a>
-              </div>
-            </div>
-          </div>
-        {% endfor %}
-                      <small class="d-block text-right mt-3">
-          <a href="http://127.0.0.1:5000/allusers">All Users</a>
-        </small>
-
-      </div>
-    </main>
-        <div hidden="hidden" id="chatRoom">
-            <div class="talk_show" id="words">
-            </div>
-            <div class="talk_input">
-                To: <select class="whotalk" id="who">
-                    <option value="All users">All users</option>
-                    {% for client in users %}
-                        <option value="{{client}}">{{client}}</option>
-                    {% endfor %}
-                </select>
-                <label for="chat-comment">Chat: </label>
-                <input id="chat-comment" type="text" name="comment">
-                <button onclick="sendMessage()">Send</button>
-                <img src="../static/image/emoji.jpeg" height="20" width="20" onclick="test()"/>
-                <br/>
-                <table border="1" hidden="hidden" id="EmojiTable">
-                    <tr>
-                        <td onclick="Emoji('&#128513;')">&#128513;</td>
-                        <td onclick="Emoji('&#129409;')">&#129409;</td>
-                        <td onclick="Emoji('&#128514;')">&#128514;</td>
-                        <td onclick="Emoji('&#128515;')">&#128515;</td>
-                        <td onclick="Emoji('&#128516;')">&#128516;</td>
-                    </tr>
-                    <tr>
-                        <td onclick="Emoji('&#128517;')">&#128517;</td>
-                        <td onclick="Emoji('&#127569;')">&#127569;</td>
-                        <td onclick="Emoji('&#129316;')">&#129316;</td>
-                        <td onclick="Emoji('&#128557;')">&#128557;</td>
-                        <td onclick="Emoji('&#128074;')">&#128074;</td>
-                    </tr>
-                    <tr>
-                        <td onclick="Emoji('&#128568;')">&#128568;</td>
-                        <td onclick="Emoji('&#128569;')">&#128569;</td>
-                        <td onclick="Emoji('&#128573;')">&#128573;</td>
-                        <td onclick="Emoji('&#128571;')">&#128571;</td>
-                        <td onclick="Emoji('&#128572;')">&#128572;</td>
-                    </tr>
-                    <tr>
-                        <td onclick="Emoji('&#128580;')">&#128580;</td>
-                        <td onclick="Emoji('&#128566;')">&#128566;</td>
-                        <td onclick="Emoji('&#128561;')">&#128561;</td>
-                        <td onclick="Emoji('&#128555;')">&#128555;</td>
-                        <td onclick="Emoji('&#128565;')">&#128565;</td>
-                    </tr>
-                    <tr>
-                        <td onclick="Emoji('&#128640;')">&#128640;</td>
-                        <td onclick="Emoji('&#128584;')">&#128584;</td>
-                        <td onclick="Emoji('&#128585;')">&#128585;</td>
-                        <td onclick="Emoji('&#128586;')">&#128586;</td>
-                        <td onclick="Emoji('&#128591;')">&#128591;</td>
-                    </tr>
-                </table>
+                <div class="d-flex justify-content-between align-items-center w-100">
+                    <strong class="text-gray-dark">{{Name}}</strong>
+                    <a href="#" onclick="connectWebRTC()">Video</a>
+                </div>
             </div>
         </div>
-        <br>
-        <video id="myVideo" autoplay muted></video>
-        <br>
-        <video id="otherVideo" autoplay></video>
-        <br>
-    </body>
+        {% endfor %}
+        <small class="d-block text-right mt-3">
+            <a href="http://127.0.0.1:5000/allusers">All Users</a>
+        </small>
+
+    </div>
+</main>
+<div hidden="hidden" id="chatRoom">
+
+    <div style="width: 100%;text-align: center">
+        <video style="text-align: center;" width="480px" height="400px" controls>
+            <source src="../static/01.mp4" type="video/mp4">
+            <source src="../static/01.ogg" type="video/ogg">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+    <div class="talk_show" id="words">
+    </div>
+    <div class="talk_input">
+        To: <select class="whotalk" id="who">
+        <option value="All users">All users</option>
+        {% for client in users %}
+        <option value="{{client}}">{{client}}</option>
+        {% endfor %}
+    </select>
+        <label for="chat-comment">Chat: </label>
+        <input id="chat-comment" type="text" name="comment">
+        <button onclick="sendMessage()">Send</button>
+        <img src="../static/image/emoji.jpeg" height="20" width="20" onclick="test()"/>
+        <br/>
+        <table border="1" hidden="hidden" id="EmojiTable">
+            <tr>
+                <td onclick="Emoji('&#128513;')">&#128513;</td>
+                <td onclick="Emoji('&#129409;')">&#129409;</td>
+                <td onclick="Emoji('&#128514;')">&#128514;</td>
+                <td onclick="Emoji('&#128515;')">&#128515;</td>
+                <td onclick="Emoji('&#128516;')">&#128516;</td>
+            </tr>
+            <tr>
+                <td onclick="Emoji('&#128517;')">&#128517;</td>
+                <td onclick="Emoji('&#127569;')">&#127569;</td>
+                <td onclick="Emoji('&#129316;')">&#129316;</td>
+                <td onclick="Emoji('&#128557;')">&#128557;</td>
+                <td onclick="Emoji('&#128074;')">&#128074;</td>
+            </tr>
+            <tr>
+                <td onclick="Emoji('&#128568;')">&#128568;</td>
+                <td onclick="Emoji('&#128569;')">&#128569;</td>
+                <td onclick="Emoji('&#128573;')">&#128573;</td>
+                <td onclick="Emoji('&#128571;')">&#128571;</td>
+                <td onclick="Emoji('&#128572;')">&#128572;</td>
+            </tr>
+            <tr>
+                <td onclick="Emoji('&#128580;')">&#128580;</td>
+                <td onclick="Emoji('&#128566;')">&#128566;</td>
+                <td onclick="Emoji('&#128561;')">&#128561;</td>
+                <td onclick="Emoji('&#128555;')">&#128555;</td>
+                <td onclick="Emoji('&#128565;')">&#128565;</td>
+            </tr>
+            <tr>
+                <td onclick="Emoji('&#128640;')">&#128640;</td>
+                <td onclick="Emoji('&#128584;')">&#128584;</td>
+                <td onclick="Emoji('&#128585;')">&#128585;</td>
+                <td onclick="Emoji('&#128586;')">&#128586;</td>
+                <td onclick="Emoji('&#128591;')">&#128591;</td>
+            </tr>
+        </table>
+    </div>
+</div>
+<br>
+<video id="myVideo" autoplay muted></video>
+<br>
+<video id="otherVideo" autoplay></video>
+<br>
+</body>
 </html>
