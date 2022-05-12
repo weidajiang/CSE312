@@ -6,11 +6,10 @@ import random
 import json
 from flask_sock import Sock
 from werkzeug.routing import BaseConverter
-from flask import render_template, request, send_from_directory, Flask, redirect
+from flask import render_template, request, Flask, redirect
 
 
-#让route可以以正则表达式的形式2
-# IDK
+
 class RegexConverter(BaseConverter):
     def __init__(self, url_map, *items):
         super(RegexConverter, self).__init__(url_map)
@@ -23,54 +22,92 @@ app.url_map.converters['regex'] = RegexConverter
 clients = {}
 
 
-#设置网页图标
-@app.route('/favicon.ico')
-def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
+# #设置网页图标
+# @app.route('/favicon.ico')
+# def favicon():
+#     return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
+#
+#
+# #设置css
+# @app.route('/style.css')
+# def css_file():
+#     return send_from_directory(os.path.join(app.root_path, 'static'), 'style.css')
+@app.route('/register', methods=["POST"])
+def register():
+    salt = bcrypt.gensalt()
+    app.secret_key = salt
+    db = MongoDB.mongoDB()
+    username = request.form.get("NewUsername")
+    password = request.form.get("NewPassword")
+    hashed_password = hashlib.sha224(password.encode() + salt).hexdigest()
+    db.addInfo(username, hashed_password, salt)
+    db.addProfile(username, "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "bird.gif")
+    response = redirect("http://127.0.0.1:5000/")
+    return response
 
 
-#设置css
-@app.route('/style.css')
-def css_file():
-    return send_from_directory(os.path.join(app.root_path, 'static'), 'style.css')
+@app.route('/image-upload', methods=["POST"])
+def upload():
+    db = MongoDB.mongoDB()
+    cookie = request.cookies.get("userToken")
+    username = db.findUsernameByCookie(cookie)['username']
+    info = db.findInfo(username)
+    salt = info["salt"]
+    filename = request.files['filename']
+    file = filename.read()
+    if len(file) == 0:
+        response = redirect(f"http://127.0.0.1:5000/profile/{username}")
+        return response
+    else:
+        type_temp = filename.filename.split(".")[-1]
+        salt = salt.decode().replace(".", "").replace("/","")
 
+        name = salt+'.'+type_temp
+        f = open("static/user_photo/" + name, 'wb')
+        f.write(file)
+        f.close()
+
+        db.Update_photo(username, name)
+
+        response = redirect(f"http://127.0.0.1:5000/profile/{username}")
+        return response
 
 @app.route('/', methods=["GET", "POST"])
 def login():
     salt = bcrypt.gensalt()
-    app.secret_key = salt  # 设置随机生成salt
+    app.secret_key = salt
     db = MongoDB.mongoDB()
     if request.method == 'GET':
-        return render_template('index.html')
+        return render_template('signin.html')
     if request.form.keys().__contains__("NewUsername"):
-        username = request.form.get("NewUsername")  #获取注册表单里的username
-        password = request.form.get("NewPassword")  #获取注册表单里的password
-        hashed_password = hashlib.sha224(password.encode() + salt).hexdigest()  #哈希加盐
-        db.addInfo(username, hashed_password, salt)  #存入数据库
-        db.addProfile(username, "N/A", "N/A", "N/A", "N/A")
-        return render_template("index.html", successfully="Your account has been created successfully!")
+        username = request.form.get("NewUsername")
+        password = request.form.get("NewPassword")
+        hashed_password = hashlib.sha224(password.encode() + salt).hexdigest()
+        db.addInfo(username, hashed_password, salt)
+        db.addProfile(username, "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "bird.gif")
+        return render_template("signin.html", successfully="Your account has been created successfully!")
 
     else:
         '''这里要判断用户名,hash值, salt是否存于database'''
         AuthenticationToken = generate_token()
-        username = request.form.get("username")  # 获取登录表单里的username
-        password = request.form.get("password")  # 获取登录表单里的password
-        user_info = db.findInfo(username)        # 数据库查找username信息
-        #如果找不到username直接放回
+        username = request.form.get("username")
+        password = request.form.get("password")
+        user_info = db.findInfo(username)
+
         if user_info is None:
-            return render_template("index.html", failed="wrong password or username")
-        salt, stored_password = user_info["salt"], user_info["password"]  #存于数据的秘密和盐
+            return render_template("signin.html", failed="wrong password or username")
+        salt, stored_password = user_info["salt"], user_info["password"]
         hashed_password = hashlib.sha224(password.encode() + salt).hexdigest()
-        if hashed_password == stored_password:   #判断密码是否配对
-            db.add_AuthenticationToken(username, AuthenticationToken)   #将cookie数据
-            response = redirect("http://127.0.0.1:5000/chat")   #放回路径
-            response.set_cookie("userToken", AuthenticationToken, max_age=3600)   #设置cookie
+        if hashed_password == stored_password:
+            db.add_AuthenticationToken(username, AuthenticationToken)
+            response = redirect("http://127.0.0.1:5000/chat")
+            response.set_cookie("userToken", AuthenticationToken, max_age=3600)
             return response
         else:
-            return render_template("index.html", failed="wrong password or username")
+            return render_template("signin.html", failed="wrong password or username")
 
 
-# 访问用户profile
+
 @app.route('/profile', methods=["GET", "POST"])
 def profile():
     db = MongoDB.mongoDB()
@@ -78,13 +115,12 @@ def profile():
         return render_template('Profile.html')
     cookie = request.cookies.get("userToken")
     username = db.findUsernameByCookie(cookie)['username']
-    # 拿到当前用户profile在进行redirect
-    db.UpdateProfile(username, request.form.get("sex"), f"{request.form.get('month')}, {request.form.get('year')}", request.form.get("address"), request.form.get("bio"))
+    print("update")
+    db.UpdateProfile(username, request.form.get("email"), request.form.get("sex"), request.form.get("dob"), request.form.get("address"), request.form.get("bio"),request.form.get("status"))
     response = redirect(f"http://127.0.0.1:5000/profile/{username}")
     return response
 
 
-#登入成功页面
 @app.route('/user', methods=["GET", "POST"])
 def userPage():
     if request.method == 'GET':
@@ -92,39 +128,42 @@ def userPage():
     print(1)
 
 
-#访问meHotel
-@app.route('/kiwi')
-def kiwi():
-    with open("static/kiwi-removebg-preview.png", "rb") as f:
-        file = f.read()
-    return file
+# #访问meHotel
+# @app.route('/kiwi')
+# def kiwi():
+#     with open("static/kiwi-removebg-preview.png", "rb") as f:
+#         file = f.read()
+#     return file
 
 
-#通过正则表达式来判断路径是否为 /profile/(username) 格式
-@app.route('/profile/<regex("[a-z0-9]*"):username>')
+@app.route('/profile/<regex("[a-z0-9]*"):username>', methods=["GET","POST"])
 def profilePage(username):
     db = MongoDB.mongoDB()
-    cookie = request.cookies.get("userToken")   #拿到cookie
-    stored_username = db.findUsernameByCookie(cookie)['username']  #通过cookie拿到username
+    cookie = request.cookies.get("userToken")
+    print(cookie)
+    stored_username = db.findUsernameByCookie(cookie)['username']
     db = MongoDB.mongoDB()
-    # 拿到当前username的profile
     info = db.findProfile(username)
-    # 如果是本人提供修改profile选项
+    print(info)
+
+    #update mode
     if username == stored_username:
-        return render_template("userProfile.html", username=f"Username:   {username}", sex=f"Sex:   {info['sex']}",
-                               birth=f"Birthday:   {info['year']}", address=f"Address:   {info['address']}", bio=f"Bio:   {info['bio']}")
-    # 不是本人只能游览
+        print(f"{info['avatar']}")
+        return render_template("Profile.html",username=f"{username}", email=f"{info['email']}", sex=f"{info['sex']}",
+                                dob =f"{info['dob']}", address=f"{info['address']}", bio=f"{info['bio']}",
+                                status =f" {info['status']}", avatar=f"{info['avatar']}")
+    # view mode
     else:
-        return render_template("userProfile.html", username=f"Username:   {username}", sex=f"Sex:   {info['sex']}",
-                               birth=f"Birthday:   {info['year']}", address=f"Address:   {info['address']}", bio=f"Bio:   {info['bio']}", hidden="visibility: hidden")
+        return render_template("Profile.html", username=f"{username}", email=f"{info['email']}", sex=f"{info['sex']}",
+                                dob =f"{info['dob']}", address=f"{info['address']}", bio=f"{info['bio']}",
+                                status =f" {info['status']}", avatar=f"{info['avatar']}", hidden="visibility: hidden")
 
 
-# 聊天室页面
 @app.route('/chat')
 def chat():
     db = MongoDB.mongoDB()
-    cookie = request.cookies.get("userToken")   #拿到cookie
-    username = db.findUsernameByCookie(cookie)['username']  #通过cookie拿到username
+    cookie = request.cookies.get("userToken")
+    username = db.findUsernameByCookie(cookie)['username']
     clients[username] = ""
     # 显示当前聊天室里的人  这里有一个bug
     render_text = []
@@ -137,22 +176,12 @@ def chat():
     return render_template("mainPage.html", username=username, onlines=render_text, users=render_text, onlines2=render_text2)
 
 
-@app.route("/function.js")
-def static_dir(path):
-    return send_from_directory("static", path)
-
-
-@app.route("/about")
-def AboutUs():
-    return render_template("AboutUs.html")
-
-
 
 @app.route("/allevents")
 def allEvent():
     db = MongoDB.mongoDB()
-    cookie = request.cookies.get("userToken")  #从header拿到cookie
-    username = db.findUsernameByCookie(cookie)['username']  #通过cookie拿到username
+    cookie = request.cookies.get("userToken")
+    username = db.findUsernameByCookie(cookie)['username']
     render_text2 = []
     for c in clients:
         if c not in render_text2:
@@ -162,8 +191,8 @@ def allEvent():
 @app.route("/allusers")
 def allUser():
     db = MongoDB.mongoDB()
-    cookie = request.cookies.get("userToken")  #从header拿到cookie
-    username = db.findUsernameByCookie(cookie)['username']  #通过cookie拿到username
+    cookie = request.cookies.get("userToken")
+    username = db.findUsernameByCookie(cookie)['username']
     render_text = []
     for c in clients:
         if c not in render_text:
@@ -171,14 +200,23 @@ def allUser():
     return render_template("ALLusers.html", username=username, onlines=render_text, users=render_text)
 
 
+@app.route("/about")
+def AboutUs():
+    return render_template("AboutUs.html")
 
-#暂时模拟websocket, 响应牵手, socketio用不明白只能用这个来代替了(我是傻逼)
+
+@app.route("/signup")
+def SignUp():
+    return render_template("signup.html")
+
+
+
 @sock.route('/websocket')
 def websocket(socket):
     db = MongoDB.mongoDB()
-    cookie = request.cookies.get("userToken")  #从header拿到cookie
-    username = db.findUsernameByCookie(cookie)['username']  #通过cookie拿到username
-    clients[db.findUsernameByCookie(cookie)['username']] = socket  #吧socket加入到字典去
+    cookie = request.cookies.get("userToken")
+    username = db.findUsernameByCookie(cookie)['username']
+    clients[db.findUsernameByCookie(cookie)['username']] = socket
     while True:
         data = socket.receive()
         # html character escape
@@ -189,14 +227,14 @@ def websocket(socket):
             for c in clients:
                 if clients[c] != socket:
                     clients[c].send(data)
-        # 判断是否为Emoji类型
+        # check if it's emoji
 
         else:
             print(data)
             if data['Emoji'] == '0':
                 data['comment'] = data['comment'].replace("\r\n", "").replace("&", "&amp").replace(">", "&gt").replace("<", "&lt")
                 data['username'] = data['username'].replace("\r\n", "").replace("&", "&amp").replace(">", "&gt").replace("<", "&lt")
-            # 公屏聊天
+            # group chat
             target_user = data['target']
             db.addChat(username, target_user, data["comment"])
             if target_user == 'All users':
@@ -209,15 +247,18 @@ def websocket(socket):
                             continue
                 except Exception as e:
                     continue
-            # 私聊
+            # private chat
             else:
                 data['comment'] = data['comment'] + '(private)'
                 data = json.dumps(data)
-                if clients[target_user] != socket:
-                    clients[target_user].send(data)
-                    socket.send(data)
-                else:
-                    socket.send(data)
+                try:
+                    if clients[target_user] != socket:
+                        clients[target_user].send(data)
+                        socket.send(data)
+                    else:
+                        socket.send(data)
+                except Exception as e:
+                    continue
 
 
 def generate_token():
@@ -232,6 +273,11 @@ def generate_token():
             token += chr(random.randint(97, 122))
     return token
 
+@app.route('/logout', methods=["GET", "POST"])
+def logOut():
+    response = redirect("http://127.0.0.1:5000/")  # 放回路径
+    response.set_cookie("userToken", "InvalidCookie", max_age=3600)
+    return response
 
 if __name__ == '__main__':
     app.run()

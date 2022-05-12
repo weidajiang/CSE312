@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="3d64a0fb-1933-4b41-a812-9e428a47dcd3" name="Changes" comment="add comment">
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/static/01.mp4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/static/css/bootstrap-grid.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/static/css/bootstrap-grid.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/static/css/bootstrap-grid.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/static/css/bootstrap-grid.min.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/static/css/bootstrap-reboot.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/static/css/bootstrap-reboot.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/static/css/bootstrap-reboot.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/static/css/bootstrap-reboot.min.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/static/css/bootstrap.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/static/css/bootstrap.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/static/css/bootstrap.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/static/css/bootstrap.min.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/static/css/chatborder.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/static/css/offcanvas.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/static/css/signin.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/static/css/signup.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/static/css/us.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/static/image/IMG-1181.GIF" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/static/image/IMG-8376.GIF" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/static/image/IMG-8642.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/static/image/IMG-8714.GIF" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/static/image/gou.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/static/image/mao.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/static/image/unnamed.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/static/js/anchor.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/static/js/bootstrap.bundle.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/static/js/bootstrap.bundle.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/static/js/bootstrap.bundle.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/static/js/bootstrap.bundle.min.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/static/js/bootstrap.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/static/js/bootstrap.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/static/js/bootstrap.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/static/js/bootstrap.min.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/static/js/clipboard.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/static/js/holder.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/static/js/jquery-slim.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/static/js/offcanvas.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/static/js/popper.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/static/user_photo/$2b$12$UZzaoQK849twmq0QOrtiqu.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/static/user_photo/$2b$12$tssv8DaMPFk4V6lrxtl.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/static/user_photo/bird.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/templates/FriendsList.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/templates/signin.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webapp/templates/signup.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/CSE312.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CSE312.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/MongoDB.py" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/MongoDB.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/static/bird.gif" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/static/image/bird.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/static/emoji.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/static/image/emoji.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/static/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/static/image/favicon.ico" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/static/function.js" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/static/js/function.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/static/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/static/css/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/static/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/static/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/templates/ALLEvents.html" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/templates/ALLEvents.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/templates/ALLUsers.html" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/templates/ALLUsers.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/templates/AboutUs.html" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/templates/AboutUs.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/templates/Profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/templates/Profile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/templates/UserPage.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/templates/chat.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/templates/chatTemplate.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/templates/chatTest.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/templates/chatborder.css" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/templates/chatborder.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/templates/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/templates/mainPage.html" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/templates/mainPage.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/templates/userProfile.html" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CSS File" />
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Merge.Settings">
+    <option name="BRANCH" value="origin/99999" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="jwd" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="28r9M0gttG9fj3Y37mP3VpTIhAq" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/webapp/user_photo" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/webapp/user_photo" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/webapp/static" />
+      <recent name="$PROJECT_DIR$/webapp/static/image" />
+      <recent name="$PROJECT_DIR$/webapp" />
+      <recent name="$PROJECT_DIR$/webapp/db" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="app" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="CSE312" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="/usr/local/bin/python3.9" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/webapp" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/webapp/app.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.app" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3d64a0fb-1933-4b41-a812-9e428a47dcd3" name="Changes" comment="" />
+      <created>1651963786480</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1651963786480</updated>
+      <workItem from="1651963790179" duration="11377000" />
+    </task>
+    <task id="LOCAL-00001" summary="sign up">
+      <created>1651966139675</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1651966139675</updated>
+    </task>
+    <task id="LOCAL-00002" summary="sign udp">
+      <created>1651967931867</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1651967931867</updated>
+    </task>
+    <task id="LOCAL-00003" summary="sign udp">
+      <created>1651968369783</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1651968369783</updated>
+    </task>
+    <task id="LOCAL-00004" summary="sign udp">
+      <created>1651982231424</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1651982231424</updated>
+    </task>
+    <task id="LOCAL-00005" summary="dasdad">
+      <created>1651988773734</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1651988773734</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="sign up" />
+    <MESSAGE value="sign udp" />
+    <MESSAGE value="dasdad" />
+    <MESSAGE value="add comment" />
+    <option name="LAST_COMMIT_MESSAGE" value="add comment" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/333$app.coverage" NAME="app Coverage Results" MODIFIED="1652048353665" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/webapp" />
+    <SUITE FILE_PATH="coverage/CSE312$app.coverage" NAME="app Coverage Results" MODIFIED="1652052053591" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/webapp" />
+    <SUITE FILE_PATH="coverage/312Final_Version$app.coverage" NAME="app Coverage Results" MODIFIED="1652371401448" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/webapp" />
+    <SUITE FILE_PATH="coverage/Demo$app.coverage" NAME="app Coverage Results" MODIFIED="1652069896295" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/webapp" />
+  </component>
+</project>
