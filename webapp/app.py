@@ -6,7 +6,7 @@ import random
 import json
 from flask_sock import Sock
 from werkzeug.routing import BaseConverter
-from flask import render_template, request, Flask, redirect
+from flask import render_template, request, Flask, redirect,url_for
 
 
 
@@ -206,7 +206,7 @@ def AboutUs():
 
 
 @app.route("/signup")
-def SignUp():
+def signup():
     return render_template("signup.html")
 
 
@@ -280,4 +280,4 @@ def logOut():
     return response
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host="0.0.0.0", port = "8000")

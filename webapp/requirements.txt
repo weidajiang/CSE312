@@ -1,0 +1,4 @@
+Flask
+Pymongo
+bcrypt
+flask-sock

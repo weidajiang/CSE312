@@ -42,7 +42,7 @@
     <meta name="author" content="CSE312 Group 404">
     <link rel="icon" href="../static/image/bird.gif">
 
-    <title>Signin Template for Bootstrap</title>
+    <title>CSE312 Group 404 Sign In</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../static/css/bootstrap.min.css" rel="stylesheet">
@@ -51,10 +51,9 @@
     <link href="../static/css/signin.css" rel="stylesheet">
     <script>
         function signup(){
-            location.href="http://127.0.0.1:5000/signup";
+            location.href="{{ url_for('signup') }}";
         }
     </script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 
 <body class="text-center">
