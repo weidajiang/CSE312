@@ -231,18 +231,19 @@ def websocket(socket):
                 try:
                     for c in clients:
                         try:
-                            clients[c].send(data)
+                            if c!=username:
+                                 clients[c].send(data)
                         except Exception as e:
                             continue
                 except Exception as e:
                     continue
             else:
-                data['comment'] = data['comment'] + '(private)'
+                data['comment'] = data['comment'] + "<span style='color: red;'>(private)</span>"
                 data = json.dumps(data)
                 try:
                     if clients[target_user] != socket:
                         clients[target_user].send(data)
-                        socket.send(data)
+                        #socket.send(data)
                     else:
                         socket.send(data)
                 except Exception as e:

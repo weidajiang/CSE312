@@ -22,48 +22,57 @@ function Emoji(value) {
 
 function test() {
     const chatBox1 = document.getElementById("EmojiTable");
-    if (chatBox1.hidden){
+    if (chatBox1.hidden) {
         chatBox1.hidden = false;
-    }
-    else{
+    } else {
         chatBox1.hidden = true;
     }
 }
 
 function chatRoom() {
     const chatBox1 = document.getElementById("chatRoom");
-    if (chatBox1.hidden){
+    if (chatBox1.hidden) {
         chatBox1.hidden = false;
-    }
-    else{
+    } else {
         chatBox1.hidden = true;
     }
 }
 
-
-function sendMessage() {
-    const chatBox = document.getElementById("chat-comment");
-    const toWho = document.getElementById("who");
-    const comment = chatBox.value;
-    const target = toWho.value;
-    chatBox.value = "";
-    chatBox.focus();
-    if (comment !== "") {
-        try{
-            socket.send(JSON.stringify({'messageType': 'chatMessage', 'comment': comment, 'target': target, 'Emoji': '0'}));
-        }
-        catch(e){
-			alert("error");
-		}
-    }
-}
+//
+// function sendMessage() {
+//
+//     const chatBox = document.getElementById("chat-comment");
+//     const toWho = document.getElementById("who");
+//     const comment = chatBox.value;
+//     const target = toWho.value;
+//     chatBox.value = "";
+//     chatBox.focus();
+//     if (comment !== "") {
+//         try {
+//             socket.send(JSON.stringify({
+//                 'messageType': 'chatMessage',
+//                 'comment': comment,
+//                 'target': target,
+//                 'Emoji': '0'
+//             }));
+//             var message = {
+//                 "username": "{{username}}",
+//                 "comment": comment
+//             };
+//             addMessage(message)
+//
+//         } catch (e) {
+//             alert("error");
+//         }
+//     }
+// }
 
 // Renders a new chat message to the page
 function addMessage(chatMessage) {
 
     let chat = document.getElementById('chat');
     var Words = document.getElementById("words");
-    Words.innerHTML += '<div class="atalk"><span>'+ chatMessage['username'] +' :' + chatMessage["comment"] +'</span></div>';
+    Words.innerHTML += '<div class="atalk"><span>' + chatMessage['username'] + ' :' + chatMessage["comment"] + '</span></div>';
     document.querySelector(".atalk").scrollIntoView({behavior: "smooth"})
 //    alert("New message :)")
     console.log("<b>" + chatMessage['username'] + "</b>: " + chatMessage["comment"] + "<br/>")
@@ -94,8 +103,12 @@ socket.onmessage = function (ws_message) {
 
     switch (messageType) {
         case 'chatMessage':
+            target = message.target;
+            from = message.username;
             addMessage(message);
-            $("#myToast").toast("show");
+            if (target != "All users" && target != from) {
+                $("#myToast").toast("show");
+            }
             break;
         case 'webRTC-offer':
             webRTCConnection.setRemoteDescription(new RTCSessionDescription(message.offer));
