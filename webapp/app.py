@@ -179,11 +179,16 @@ def allusers():
     db = MongoDB.mongoDB()
     cookie = request.cookies.get("userToken")
     username = db.findUsernameByCookie(cookie)['username']
+    user = db.findProfile(username)
     render_text = []
+    user_list = []
     for c in clients:
         if c not in render_text:
             render_text.append(c)
-    return render_template("ALLusers.html", username=username, onlines=render_text, users=render_text)
+            result = db.findProfile(c)
+            print(result)
+            user_list.append(result)
+    return render_template("ALLusers.html", username=username, onlines=render_text, users=render_text,user_list = user_list,login_user=user)
 
 
 @app.route("/about")
@@ -264,5 +269,5 @@ def logout():
     return response
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port = "8000")
-    #app.run()
+    #app.run(host="0.0.0.0", port = "8000")
+    app.run()
