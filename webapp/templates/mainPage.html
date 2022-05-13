@@ -14,7 +14,7 @@
     <link href="../static/css/offcanvas.css" rel="stylesheet">
     <script src="../static/js/function.js"></script>
 
-<!--    reference link: https://getbootstrap.com/docs/4.3/getting-started/download/-->
+    <!--    reference link: https://getbootstrap.com/docs/4.3/getting-started/download/-->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
             crossorigin="anonymous"></script>
@@ -30,14 +30,47 @@
             crossorigin="anonymous"></script>
 </head>
 
-<style>
+<script>
 
-    /*body{*/
-    /*    background-image: url("../static/image/bg.gif");*/
-    /*}*/
+    function sendMessage() {
 
-</style>
+        const chatBox = document.getElementById("chat-comment");
+        const toWho = document.getElementById("who");
+        const comment = chatBox.value;
+        const target = toWho.value;
+        const from = "{{username}}";
+        chatBox.value = "";
+        chatBox.focus();
+        if (comment !== "") {
+            try {
+                socket.send(JSON.stringify({
+                    'messageType': 'chatMessage',
+                    'comment': comment,
+                    'target': target,
+                    'Emoji': '0'
+                }));
 
+                if (target =="All users") {
+                    var message = {
+                        "username": from,
+                        "comment": comment
+                    };
+
+                } else {
+                    var message = {
+                        "username": from,
+                        "comment": comment + "<span style='color: red;'>(private)</span>"
+                    };
+                }
+                addMessage(message);
+            } catch (e) {
+                alert("error");
+            }
+        }
+    }
+
+
+</script>
 
 <body class="firstBody">
 
@@ -141,9 +174,11 @@
         </div>
         <div class="talk_input">
             To: <select class="whotalk" id="who">
-            <option value="All users">All users</option>
+            <option value="All users">Public</option>
             {% for client in users %}
-            <option value="{{ client }}">{{ client }}</option>
+            {% if client not in username %}
+                <option value="{{ client }}">{{ client }}</option>
+            {% endif %}
             {% endfor %}
         </select>
             <label for="chat-comment">Chat: </label>
