@@ -198,7 +198,10 @@ def allusers():
 
 @app.route("/about")
 def about():
-    return render_template("AboutUs.html")
+    db = MongoDB.mongoDB()
+    cookie = request.cookies.get("userToken")
+    username = db.findUsernameByCookie(cookie)['username']
+    return render_template("AboutUs.html",username=username)
 
 
 @app.route("/signup")

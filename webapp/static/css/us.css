@@ -8,7 +8,8 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(200deg, #517fa4, #243949)
+    background: linear-gradient(200deg, #517fa4, #243949);
+    background-image: url("../image/bg.gif");
 
 }
 
