@@ -104,7 +104,7 @@ def profile():
 @app.route('/user', methods=["GET", "POST"])
 def userPage():
     if request.method == 'GET':
-        return render_template("UserPage.html")
+        return render_template("ALLUsers.html")
     print(1)
 
 
