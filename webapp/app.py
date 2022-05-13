@@ -206,14 +206,13 @@ def websocket(socket):
             for c in clients:
                 if clients[c] != socket:
                     clients[c].send(data)
-        # check if it's emoji
 
         else:
             print(data)
             if data['Emoji'] == '0':
                 data['comment'] = data['comment'].replace("\r\n", "").replace("&", "&amp").replace(">", "&gt").replace("<", "&lt")
                 data['username'] = data['username'].replace("\r\n", "").replace("&", "&amp").replace(">", "&gt").replace("<", "&lt")
-            # group chat
+
             target_user = data['target']
             db.addChat(username, target_user, data["comment"])
             if target_user == 'All users':
@@ -226,7 +225,6 @@ def websocket(socket):
                             continue
                 except Exception as e:
                     continue
-            # private chat
             else:
                 data['comment'] = data['comment'] + '(private)'
                 data = json.dumps(data)
@@ -254,10 +252,10 @@ def generate_token():
 
 @app.route('/logout', methods=["GET", "POST"])
 def logout():
-    response = redirect("/")  # 放回路径
+    response = redirect("/")
     response.set_cookie("userToken", "InvalidCookie", max_age=3600)
     return response
 
 if __name__ == '__main__':
-    #app.run(host="0.0.0.0", port = "8000")
-    app.run()
+    app.run(host="0.0.0.0", port = "8000")
+    #app.run()
