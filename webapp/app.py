@@ -165,10 +165,14 @@ def allevents():
     cookie = request.cookies.get("userToken")
     username = db.findUsernameByCookie(cookie)['username']
     render_text2 = []
+    user_list = []
     for c in clients:
         if c not in render_text2:
+            result = db.findProfile(c)
+            print(result)
             render_text2.append((c, db.findProfile(c)['bio']))
-    return render_template("ALLEvents.html", username=username, onlines2=render_text2)
+            user_list.append(result)
+    return render_template("ALLEvents.html", username=username, onlines2=render_text2,user_list=user_list)
 
 @app.route("/allusers")
 def allusers():
