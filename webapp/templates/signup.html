@@ -7,6 +7,8 @@
     <meta name="author" content="CSE312 Group 404">
     <meta name="generator" content="Hugo 0.88.1">
     <title>CSE312 Group 404 Sign Up</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
     <link href="../static/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .bd-placeholder-img {
@@ -24,6 +26,13 @@
         }
     </style>
     <link href="../static/css/signup.css" rel="stylesheet">
+    <script>
+        $(document).ready(function(){
+             if ("{{failed}}" == 1) {
+                 $('#wrongusername').modal('show');
+            }
+        });
+    </script>
 </head>
 <body class="text-center">
 <div class="modal modal-signin d-block py-5" tabindex="-1" role="dialog" id="modalSignin">
@@ -33,13 +42,13 @@
                 <h2 class="fw-bold mb-0">Create an account</h2>
             </div>
             <div class="modal-body p-5 pt-0">
-                <form action="/" method="post" enctype="multipart/form-data">
+                <form action="/register" method="post" enctype="multipart/form-data">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control rounded-4" id="NewUsername" name="NewUsername" placeholder="username">
+                        <input type="text" class="form-control rounded-4" id="NewUsername" name="NewUsername" placeholder="username" required autofocus>
 
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="password" class="form-control rounded-4" id="floatingPassword3"  name="NewPassword" placeholder="Password">
+                        <input type="password" class="form-control rounded-4" id="floatingPassword3"  name="NewPassword" placeholder="Password"  required>
 
                     </div>
                     <button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" type="submit">Sign up</button>
@@ -47,6 +56,22 @@
             </div>
         </div>
     </div>
+</div>
+
+<div class="modal fade" id="wrongusername" tabindex="-1" role="dialog" aria-labelledby="wrongusernameCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="wrongusernameCenterTitle">Group 404 Project</h5>
+      </div>
+      <div class="modal-body">
+        Username already exist
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
 </div>
 <script src="../static/js/bootstrap.bundle.min.js"></script>
 

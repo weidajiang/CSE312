@@ -28,6 +28,9 @@ def register():
     db = MongoDB.mongoDB()
     username = request.form.get("NewUsername")
     password = request.form.get("NewPassword")
+    user_info = db.findInfo(username)
+    if user_info is not None:
+        return render_template("signup.html", failed=1)
     hashed_password = hashlib.sha224(password.encode() + salt).hexdigest()
     db.addInfo(username, hashed_password, salt)
     db.addProfile(username, "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "bird.gif")
@@ -80,7 +83,7 @@ def login():
         user_info = db.findInfo(username)
 
         if user_info is None:
-            return render_template("signin.html", failed="wrong password or username")
+            return render_template("signin.html", failed=1)
         salt, stored_password = user_info["salt"], user_info["password"]
         hashed_password = hashlib.sha224(password.encode() + salt).hexdigest()
         if hashed_password == stored_password:
@@ -89,7 +92,7 @@ def login():
             response.set_cookie("userToken", AuthenticationToken, max_age=3600)
             return response
         else:
-            return render_template("signin.html", failed="wrong password or username")
+            return render_template("signin.html", failed=2)
 
 
 
@@ -257,5 +260,5 @@ def logout():
     return response
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port = "8000")
-    #app.run()
+    #app.run(host="0.0.0.0", port = "8000")
+    app.run()
