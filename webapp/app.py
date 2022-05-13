@@ -150,12 +150,16 @@ def chat():
     clients[username] = ""
     render_text = []
     render_text2 = []
+    login_user = db.findProfile(username)
+    online2_list = []
 
     for c in clients:
         if c not in render_text:
             render_text.append(c)
+            result = db.findProfile(c)
             render_text2.append((c, db.findProfile(c)['bio']))
-    return render_template("mainPage.html", username=username, onlines=render_text, users=render_text, onlines2=render_text2)
+            online2_list.append(result)
+    return render_template("mainPage.html",online2_list=online2_list,login_user=login_user, username=username, onlines=render_text, users=render_text, onlines2=render_text2)
 
 
 
