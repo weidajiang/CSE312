@@ -53,7 +53,7 @@ function sendMessage() {
             socket.send(JSON.stringify({'messageType': 'chatMessage', 'comment': comment, 'target': target, 'Emoji': '0'}));
         }
         catch(e){
-			alert("程序报错");
+			alert("error");
 		}
     }
 }
@@ -95,6 +95,7 @@ socket.onmessage = function (ws_message) {
     switch (messageType) {
         case 'chatMessage':
             addMessage(message);
+            $("#myToast").toast("show");
             break;
         case 'webRTC-offer':
             webRTCConnection.setRemoteDescription(new RTCSessionDescription(message.offer));
