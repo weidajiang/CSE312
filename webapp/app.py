@@ -9,29 +9,18 @@ from werkzeug.routing import BaseConverter
 from flask import render_template, request, Flask, redirect,url_for
 
 
-
-class RegexConverter(BaseConverter):
-    def __init__(self, url_map, *items):
-        super(RegexConverter, self).__init__(url_map)
-        self.regex = items[0]
+#
+# class RegexConverter(BaseConverter):
+#     def __init__(self, url_map, *items):
+#         super(RegexConverter, self).__init__(url_map)
+#         self.regex = items[0]
 
 
 app = Flask(__name__)
 sock = Sock(app)
-app.url_map.converters['regex'] = RegexConverter
+# app.url_map.converters['regex'] = RegexConverter
 clients = {}
 
-
-# #设置网页图标
-# @app.route('/favicon.ico')
-# def favicon():
-#     return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
-#
-#
-# #设置css
-# @app.route('/style.css')
-# def css_file():
-#     return send_from_directory(os.path.join(app.root_path, 'static'), 'style.css')
 @app.route('/register', methods=["POST"])
 def register():
     salt = bcrypt.gensalt()
@@ -56,20 +45,17 @@ def upload():
     filename = request.files['filename']
     file = filename.read()
     if len(file) == 0:
-        response = redirect(f"http://127.0.0.1:5000/profile/{username}")
+        response = redirect(f"profilePage?username={username}")
         return response
     else:
         type_temp = filename.filename.split(".")[-1]
         salt = salt.decode().replace(".", "").replace("/","")
-
         name = salt+'.'+type_temp
         f = open("static/user_photo/" + name, 'wb')
         f.write(file)
         f.close()
-
         db.Update_photo(username, name)
-
-        response = redirect(f"http://127.0.0.1:5000/profile/{username}")
+        response = redirect(f"profilePage?username={username}")
         return response
 
 @app.route('/', methods=["GET", "POST"])
@@ -116,7 +102,7 @@ def profile():
     username = db.findUsernameByCookie(cookie)['username']
     print("update")
     db.UpdateProfile(username, request.form.get("email"), request.form.get("sex"), request.form.get("dob"), request.form.get("address"), request.form.get("bio"),request.form.get("status"))
-    response = redirect(f"http://127.0.0.1:5000/profile/{username}")
+    response = redirect(f"profilePage?username={username}")
     return response
 
 
@@ -129,9 +115,8 @@ def userPage():
 
 # @app.route('/profile/<regex("[a-z0-9]*"):username>', methods=["GET","POST"])
 @app.route('/profilePage', methods=["GET","POST"])
-def profilePage(username):
+def profilePage():
     db = MongoDB.mongoDB()
-    print(username)
     cookie = request.cookies.get("userToken")
     print(cookie)
     stored_username = db.findUsernameByCookie(cookie)['username']
@@ -183,7 +168,7 @@ def allevents():
     return render_template("ALLEvents.html", username=username, onlines2=render_text2)
 
 @app.route("/allusers")
-def allUser():
+def allusers():
     db = MongoDB.mongoDB()
     cookie = request.cookies.get("userToken")
     username = db.findUsernameByCookie(cookie)['username']
@@ -269,7 +254,7 @@ def generate_token():
 
 @app.route('/logout', methods=["GET", "POST"])
 def logout():
-    response = redirect("")  # 放回路径
+    response = redirect("/")  # 放回路径
     response.set_cookie("userToken", "InvalidCookie", max_age=3600)
     return response
 

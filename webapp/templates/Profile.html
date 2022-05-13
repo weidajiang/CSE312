@@ -20,36 +20,20 @@
     <button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas">
         <span class="navbar-toggler-icon"></span>
     </button>
-
     <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="{{ url_for('chat') }}">Home <span class="sr-only">(current)</span></a>
-            </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Profile</a>
+                <a class="nav-link" href="{{ url_for('chat') }}">Home </a>
             </li>
-            <!--          <li class="nav-item">-->
-            <!--            <a class="nav-link" href="#">Events</a>-->
-            <!--          </li>-->
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ url_for('profilePage')}}?username={{username}}">Profile <span class="sr-only">(current)</span></a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('about') }}">About Us</a>
             </li>
-
             <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('logout') }}">Sign Out</a>
             </li>
-            <!--          <li class="nav-item">-->
-            <!--            <a class="nav-link" href="#">Friends</a>-->
-            <!--          </li>-->
-            <!--          <li class="nav-item dropdown">-->
-            <!--            <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More</a>-->
-            <!--            <div class="dropdown-menu" aria-labelledby="dropdown01">-->
-            <!--              <a class="dropdown-item" href="#">Coming</a>-->
-            <!--              <a class="dropdown-item" href="#">Soon</a>-->
-            <!--              <a class="dropdown-item" href="#">Coming Soon</a>-->
-            <!--            </div>-->
-            <!--          </li>-->
         </ul>
         <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
@@ -158,7 +142,7 @@
     </form>
 
     <small class="d-block text-right mt-3">
-        <a href="{{ url_for('about') }}">Return</a>
+        <a href="{{ url_for('chat') }}">Return</a>
     </small>
     </div>
 </main>

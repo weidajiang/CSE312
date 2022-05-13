@@ -7,15 +7,20 @@
     <meta name="author" content="CSE312 Group 404">
 
     <title>Group 404 project</title>
+    <link rel="shortcut icon" href="../static/image/favicon.ico" type="image/x-icon"/>
+
 
     <link href="../static/css/bootstrap.min.css" rel="stylesheet">
 
     <link href="../static/css/offcanvas.css" rel="stylesheet">
+    <script src="../static/js/function.js"></script>
+
 </head>
 <body class="firstBody">
-<script src="../static/js/function.js"></script>
+
+
 <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">Wuwu</a>
+    <a class="navbar-brand" href="#">Wülaàá</a>
     <button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -25,11 +30,8 @@
             <li class="nav-item active">
                 <a class="nav-link" href="{{ url_for('chat') }}">Home <span class="sr-only">(current)</span></a>
             </li>
-            <!--          <li class="nav-item">-->
-            <!--            <a class="nav-link" href="#">Notifications</a>-->
-            <!--          </li>-->
             <li class="nav-item">
-                <a class="nav-link" href="#">Profile</a>
+                <a class="nav-link" href="{{ url_for('profilePage')}}?username={{username}}">Profile</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('about') }}">About Us</a>
@@ -37,17 +39,6 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('logout') }}">Sign Out</a>
             </li>
-            <!--          <li class="nav-item">-->
-            <!--            <a class="nav-link" href="#">Friends</a>-->
-            <!--          </li>-->
-            <!--          <li class="nav-item dropdown">-->
-            <!--            <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More</a>-->
-            <!--            <div class="dropdown-menu" aria-labelledby="dropdown01">-->
-            <!--              <a class="dropdown-item" href="#">Coming Coming</a>-->
-            <!--              <a class="dropdown-item" href="#">Coming soon</a>-->
-            <!--              <a class="dropdown-item" href="#">Coming soon</a>-->
-            <!--            </div>-->
-            <!--          </li>-->
         </ul>
         <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">

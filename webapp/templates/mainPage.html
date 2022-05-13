@@ -3,6 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="../static/image/favicon.ico" type="image/x-icon"/>
+
     <meta name="description" content="">
     <meta name="author" content="CSE312 Group 404">
 
@@ -24,21 +26,15 @@
             <li class="nav-item active">
                 <a class="nav-link" href="{{ url_for('chat') }}">Home <span class="sr-only">(current)</span></a>
             </li>
-            <!--          <li class="nav-item">-->
-            <!--            <a class="nav-link" href="#">Friends</a>-->
-            <!--          </li>-->
             <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('profilePage',username = 1)}}">Profile</a>
+                <a class="nav-link" href="{{ url_for('profilePage')}}?username={{username}}">Profile</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('about') }}">About Us</a>
             </li>
-
             <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('logout') }}">Sign Out</a>
             </li>
-
-
         </ul>
         <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
