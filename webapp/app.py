@@ -5,20 +5,12 @@ import hashlib
 import random
 import json
 from flask_sock import Sock
-from werkzeug.routing import BaseConverter
 from flask import render_template, request, Flask, redirect,url_for
 
-
-#
-# class RegexConverter(BaseConverter):
-#     def __init__(self, url_map, *items):
-#         super(RegexConverter, self).__init__(url_map)
-#         self.regex = items[0]
 
 
 app = Flask(__name__)
 sock = Sock(app)
-# app.url_map.converters['regex'] = RegexConverter
 clients = {}
 
 @app.route('/register', methods=["POST"])
@@ -116,7 +108,6 @@ def userPage():
     print(1)
 
 
-# @app.route('/profile/<regex("[a-z0-9]*"):username>', methods=["GET","POST"])
 @app.route('/profilePage', methods=["GET","POST"])
 def profilePage():
     db = MongoDB.mongoDB()
