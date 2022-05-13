@@ -166,13 +166,14 @@ def allevents():
     username = db.findUsernameByCookie(cookie)['username']
     render_text2 = []
     user_list = []
+    login_user = db.findProfile(username)
     for c in clients:
         if c not in render_text2:
             result = db.findProfile(c)
             print(result)
             render_text2.append((c, db.findProfile(c)['bio']))
             user_list.append(result)
-    return render_template("ALLEvents.html", username=username, onlines2=render_text2,user_list=user_list)
+    return render_template("ALLEvents.html", login_user=login_user, username=username, onlines2=render_text2,user_list=user_list)
 
 @app.route("/allusers")
 def allusers():
@@ -269,5 +270,5 @@ def logout():
     return response
 
 if __name__ == '__main__':
-    #app.run(host="0.0.0.0", port = "8000")
-    app.run()
+    app.run(host="0.0.0.0", port = "8000")
+    #app.run()
