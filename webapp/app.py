@@ -42,7 +42,7 @@ def register():
     hashed_password = hashlib.sha224(password.encode() + salt).hexdigest()
     db.addInfo(username, hashed_password, salt)
     db.addProfile(username, "N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "bird.gif")
-    response = redirect("http://127.0.0.1:5000/")
+    response = redirect("/")
     return response
 
 
@@ -88,7 +88,6 @@ def login():
         return render_template("signin.html", successfully="Your account has been created successfully!")
 
     else:
-        '''这里要判断用户名,hash值, salt是否存于database'''
         AuthenticationToken = generate_token()
         username = request.form.get("username")
         password = request.form.get("password")
@@ -100,7 +99,7 @@ def login():
         hashed_password = hashlib.sha224(password.encode() + salt).hexdigest()
         if hashed_password == stored_password:
             db.add_AuthenticationToken(username, AuthenticationToken)
-            response = redirect("http://127.0.0.1:5000/chat")
+            response = redirect('chat')
             response.set_cookie("userToken", AuthenticationToken, max_age=3600)
             return response
         else:
@@ -128,21 +127,17 @@ def userPage():
     print(1)
 
 
-# #访问meHotel
-# @app.route('/kiwi')
-# def kiwi():
-#     with open("static/kiwi-removebg-preview.png", "rb") as f:
-#         file = f.read()
-#     return file
-
-
-@app.route('/profile/<regex("[a-z0-9]*"):username>', methods=["GET","POST"])
+# @app.route('/profile/<regex("[a-z0-9]*"):username>', methods=["GET","POST"])
+@app.route('/profilePage', methods=["GET","POST"])
 def profilePage(username):
     db = MongoDB.mongoDB()
+    print(username)
     cookie = request.cookies.get("userToken")
     print(cookie)
     stored_username = db.findUsernameByCookie(cookie)['username']
     db = MongoDB.mongoDB()
+    username = request.args.get('username')
+    print(username)
     info = db.findProfile(username)
     print(info)
 
@@ -165,7 +160,6 @@ def chat():
     cookie = request.cookies.get("userToken")
     username = db.findUsernameByCookie(cookie)['username']
     clients[username] = ""
-    # 显示当前聊天室里的人  这里有一个bug
     render_text = []
     render_text2 = []
 
@@ -178,7 +172,7 @@ def chat():
 
 
 @app.route("/allevents")
-def allEvent():
+def allevents():
     db = MongoDB.mongoDB()
     cookie = request.cookies.get("userToken")
     username = db.findUsernameByCookie(cookie)['username']
@@ -201,7 +195,7 @@ def allUser():
 
 
 @app.route("/about")
-def AboutUs():
+def about():
     return render_template("AboutUs.html")
 
 
@@ -274,10 +268,11 @@ def generate_token():
     return token
 
 @app.route('/logout', methods=["GET", "POST"])
-def logOut():
-    response = redirect("http://127.0.0.1:5000/")  # 放回路径
+def logout():
+    response = redirect("")  # 放回路径
     response.set_cookie("userToken", "InvalidCookie", max_age=3600)
     return response
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port = "8000")
+    #app.run(host="0.0.0.0", port = "8000")
+    app.run()

@@ -23,20 +23,20 @@
       <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="http://127.0.0.1:5000/chat">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="{{ url_for('chat') }}">Home <span class="sr-only">(current)</span></a>
           </li>
 <!--          <li class="nav-item">-->
 <!--            <a class="nav-link" href="#">Friends</a>-->
 <!--          </li>-->
           <li class="nav-item">
-            <a class="nav-link" href="http://127.0.0.1:5000/profile/{{username}}">Profile</a>
+            <a class="nav-link" href=" {{ url_for('profile'),username = {{username}} }}">Profile</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="http://127.0.0.1:5000/about#">About Us</a>
+            <a class="nav-link" href="{{ url_for('about') }}">About Us</a>
           </li>
 
             <li class="nav-item">
-            <a class="nav-link" href="http://127.0.0.1:5000/logout">Sign Out</a>
+            <a class="nav-link" href="{{ url_for('logout') }}">Sign Out</a>
           </li>
 <!--          <li class="nav-item dropdown">-->
 <!--            <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More</a>-->
@@ -57,8 +57,6 @@
 
 
     <main role="main" class="container">
-
-
       <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple rounded box-shadow">
           <img src="../static/image/bird.gif" alt=""  width="48" height="48" class="mr-2 rounded">
         <div class="lh-100">

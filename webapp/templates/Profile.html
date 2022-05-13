@@ -24,7 +24,7 @@
     <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="http://127.0.0.1:5000/chat">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{{ url_for('chat') }}">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Profile</a>
@@ -33,11 +33,11 @@
             <!--            <a class="nav-link" href="#">Events</a>-->
             <!--          </li>-->
             <li class="nav-item">
-                <a class="nav-link" href="http://127.0.0.1:5000/about#">About Us</a>
+                <a class="nav-link" href="{{ url_for('about') }}">About Us</a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="http://127.0.0.1:5000/logout">Sign Out</a>
+                <a class="nav-link" href="{{ url_for('logout') }}">Sign Out</a>
             </li>
             <!--          <li class="nav-item">-->
             <!--            <a class="nav-link" href="#">Friends</a>-->
@@ -158,7 +158,7 @@
     </form>
 
     <small class="d-block text-right mt-3">
-        <a href="http://127.0.0.1:5000/chat">Return</a>
+        <a href="{{ url_for('about') }}">Return</a>
     </small>
     </div>
 </main>
