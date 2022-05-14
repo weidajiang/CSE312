@@ -5,13 +5,14 @@ import hashlib
 import random
 import json
 from flask_sock import Sock
-from flask import render_template, request, Flask, redirect,url_for
+from flask import render_template, request, Flask, redirect, url_for
 
 
 
 app = Flask(__name__)
 sock = Sock(app)
 clients = {}
+current_client = ""
 
 @app.route('/register', methods=["POST"])
 def register():
@@ -200,25 +201,23 @@ def signup():
     return render_template("signup.html")
 
 
-
 @sock.route('/websocket')
 def websocket(socket):
+    current_client = socket
     db = MongoDB.mongoDB()
     cookie = request.cookies.get("userToken")
     username = db.findUsernameByCookie(cookie)['username']
+    print(clients)
     clients[db.findUsernameByCookie(cookie)['username']] = socket
     while True:
         data = socket.receive()
-        # html character escape
         data = json.loads(data)
         data['username'] = username
         if data['messageType'].__contains__("webRTC"):
             data = json.dumps(data)
-            print(data)
             for c in clients:
                 if clients[c] != socket:
                     clients[c].send(data)
-
         else:
             print(data)
             if data['Emoji'] == '0':
@@ -263,12 +262,18 @@ def generate_token():
             token += chr(random.randint(97, 122))
     return token
 
+
 @app.route('/logout', methods=["GET", "POST"])
 def logout():
+    db = MongoDB.mongoDB()
+    cookie = request.cookies.get("userToken")
+    username = db.findUsernameByCookie(cookie)['username']
+    del clients[username]
     response = redirect("/")
     response.set_cookie("userToken", "InvalidCookie", max_age=3600)
     return response
 
+
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port = "8000")
-    #app.run()
+    # app.run(host="0.0.0.0", port = "8000")
+    app.run()
