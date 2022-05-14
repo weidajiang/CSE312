@@ -214,6 +214,7 @@ def websocket(socket):
         data['username'] = username
         if data['messageType'].__contains__("webRTC"):
             data = json.dumps(data)
+            print(data)
             for c in clients:
                 if clients[c] != socket:
                     clients[c].send(data)

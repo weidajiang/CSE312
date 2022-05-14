@@ -169,29 +169,14 @@ function startVideo() {
     })
 }
 
-function sleep(d) {
-    for (var t = Date.now(); Date.now() - t <= d;) ;
-}
+function offer() {
 
-
-async function offer() {
-    var answer = window.confirm("Save data?");
-    if (answer) {
-        //some code
-        await connectWebRTC();
-        var answer = window.confirm("Save data?");
-        if (answer) {
-            //some code
-            connectWebRTC()
-        } else {
-            //some code
-        }
-    } else {
-        //some code
-    }
-
-
-
+    setTimeout(() => {
+        connectWebRTC();
+        setTimeout(() => {
+            connectWebRTC();
+        }, 500);
+    }, 1000);
 }
 
 
