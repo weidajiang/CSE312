@@ -2,6 +2,20 @@
 const socket = new WebSocket('ws://' + window.location.host + '/websocket');
 
 let webRTCConnection;
+let count = 1;
+
+const iceConfig = {
+    'iceServers': [{'url': 'stun:stun2.1.google.com:19302'}]
+};
+
+// create a WebRTC connection object
+webRTCConnection = new RTCPeerConnection(iceConfig);
+
+
+// called when an ice candidate needs to be sent to the peer
+webRTCConnection.onicecandidate = function (data) {
+    socket.send(JSON.stringify({'messageType': 'webRTC-candidate', 'candidate': data.candidate}));
+};
 
 // Allow users to send messages by pressing enter instead of clicking the Send button
 document.addEventListener("keypress", function (event) {
@@ -111,6 +125,8 @@ socket.onmessage = function (ws_message) {
             }
             break;
         case 'webRTC-offer':
+            // alert("offer video");
+            startVideo();
             webRTCConnection.setRemoteDescription(new RTCSessionDescription(message.offer));
             webRTCConnection.createAnswer().then(answer => {
                 webRTCConnection.setLocalDescription(answer);
@@ -118,16 +134,19 @@ socket.onmessage = function (ws_message) {
             });
             break;
         case 'webRTC-answer':
+            // alert("answer video")
             webRTCConnection.setRemoteDescription(new RTCSessionDescription(message.answer));
+
             break;
         case 'webRTC-candidate':
-            alert("start video")
             webRTCConnection.addIceCandidate(new RTCIceCandidate(message.candidate));
             break;
         default:
             console.log("received an invalid WS messageType");
     }
+
 }
+
 
 function startVideo() {
     const constraints = {video: true, audio: true};
@@ -136,12 +155,6 @@ function startVideo() {
         elem.srcObject = myStream;
 
         // Use Google's public STUN server
-        const iceConfig = {
-            'iceServers': [{'url': 'stun:stun2.1.google.com:19302'}]
-        };
-
-        // create a WebRTC connection object
-        webRTCConnection = new RTCPeerConnection(iceConfig);
 
         // add your local stream to the connection
         webRTCConnection.addStream(myStream);
@@ -152,16 +165,39 @@ function startVideo() {
             remoteVideo.srcObject = data.stream;
         };
 
-        // called when an ice candidate needs to be sent to the peer
-        webRTCConnection.onicecandidate = function (data) {
-            socket.send(JSON.stringify({'messageType': 'webRTC-candidate', 'candidate': data.candidate}));
-        };
+
     })
+}
+
+function sleep(d) {
+    for (var t = Date.now(); Date.now() - t <= d;) ;
+}
+
+
+async function offer() {
+    var answer = window.confirm("Save data?");
+    if (answer) {
+        //some code
+        await connectWebRTC();
+        var answer = window.confirm("Save data?");
+        if (answer) {
+            //some code
+            connectWebRTC()
+        } else {
+            //some code
+        }
+    } else {
+        //some code
+    }
+
+
+
 }
 
 
 function connectWebRTC() {
     // create and send an offer
+    startVideo();
     webRTCConnection.createOffer().then(webRTCOffer => {
         socket.send(JSON.stringify({'messageType': 'webRTC-offer', 'offer': webRTCOffer}));
         webRTCConnection.setLocalDescription(webRTCOffer);
