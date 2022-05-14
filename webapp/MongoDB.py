@@ -33,7 +33,6 @@ class mongoDB:
         result = self.Cookies.find_one({"token": cookie})
         return result
 
-    # 用户名，邮箱，性别，生日，地址，个签，状态，头像
     def addProfile(self, username, email, sex, dob, address, bio, status, avatar):
         data = {"username": username,
                 "email": email,
