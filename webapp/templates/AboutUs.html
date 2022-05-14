@@ -8,8 +8,7 @@
 
     <title>Group 404 project</title>
     <link rel="shortcut icon" href="../static/image/favicon.ico" type="image/x-icon"/>
-
-
+    <!--    reference link:  https://gitee.com/wyanhui02/html_css_demo-->
     <link href="../static/css/bootstrap.min.css" rel="stylesheet">
 
     <link href="../static/css/offcanvas.css" rel="stylesheet">
@@ -28,7 +27,7 @@
                 <a class="nav-link" href="{{ url_for('chat') }}">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('profilePage')}}?username={{username}}">Profile</a>
+                <a class="nav-link" href="{{ url_for('profilePage') }}?username={{ username }}">Profile</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('about') }}">About Us</a>
