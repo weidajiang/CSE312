@@ -37,8 +37,7 @@
 
 ## Other component
 <p>User can update their profile information</p>
-<p>About us page</p>
-
+<p>About us page</p> 
 
 # University at Buffalo, CSE312
 # Author:
@@ -52,3 +51,5 @@
 * [Flask](https://flask.palletsprojects.com/en/2.1.x/)
 * [Bootstrap 4.3](https://getbootstrap.com/docs/4.3/getting-started/introduction/)
 * [MongoDB](https://www.mongodb.com/)
+* [About us Source](https://gitee.com/wyanhui02/html_css_demo/)
+
