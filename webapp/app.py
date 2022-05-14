@@ -185,7 +185,7 @@ def allusers():
             result = db.findProfile(c)
             print(result)
             user_list.append(result)
-    return render_template("ALLusers.html", username=username, onlines=render_text, users=render_text,user_list = user_list,login_user=user)
+    return render_template("ALLUsers.html", username=username, onlines=render_text, users=render_text,user_list = user_list,login_user=user)
 
 
 @app.route("/about")
