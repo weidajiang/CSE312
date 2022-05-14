@@ -35,6 +35,9 @@
 <p>Choose a online user other than you, click `Video` button, and that will FORCE open your camera and targeted user camera. (LOL Just for your testing convenience)</p>
 
 
+## Other component
+<p>User can update their profile information</p>
+<p>About us page</p>
 
 
 # University at Buffalo, CSE312
